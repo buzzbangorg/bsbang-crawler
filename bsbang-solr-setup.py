@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+# XXX: DON'T USE FOR NOW, WE WILL LET SOLR ADD DOCUMENTS AUTOMATICALLY USING DISCOVERED TYPES INSTEAD
 import json
 import requests
 
