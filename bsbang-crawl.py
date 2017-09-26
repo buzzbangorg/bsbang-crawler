@@ -26,6 +26,7 @@ headers = {'Content-type': 'application/json'}
 
 for jsonld in jsonlds:
     # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
+    # TODO: Use solr de-dupe for this
     jsonld['id'] = hashlib.sha256(canonicaljson.encode_canonical_json(jsonld)).hexdigest()
     print(jsonld)
     r = requests.post(solrJsonDocUpdatePath + '?commit=true', json=jsonld, headers=headers)
