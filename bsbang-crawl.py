@@ -8,7 +8,7 @@ import requests
 # import uuid
 
 # namespaceUuid = uuid.UUID('734bf6c4-c123-412e-981f-b867570a369f')
-solrPath = 'http://localhost:8983/solr/bsbang-dev-core/'
+solrPath = 'http://localhost:8983/solr/bsbang/'
 solrJsonDocUpdatePath = solrPath + 'update/json/docs'
 
 # MAIN
@@ -25,9 +25,16 @@ for tag in tags:
 headers = {'Content-type': 'application/json'}
 
 for jsonld in jsonlds:
-    # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
+    json = {}
+    json['identifier'] = jsonld['identifier']
+    json['name'] = jsonld['name']
+    json['additionalType'] = jsonld['additionalType']
+    json['url'] = jsonld['url']
+
     # TODO: Use solr de-dupe for this
-    jsonld['id'] = hashlib.sha256(canonicaljson.encode_canonical_json(jsonld)).hexdigest()
-    print(jsonld)
-    r = requests.post(solrJsonDocUpdatePath + '?commit=true', json=jsonld, headers=headers)
+    # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
+    json['id'] = hashlib.sha256(canonicaljson.encode_canonical_json(json)).hexdigest()
+
+    print(json)
+    r = requests.post(solrJsonDocUpdatePath + '?commit=true', json=json, headers=headers)
     print(r.text)
