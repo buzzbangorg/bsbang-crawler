@@ -25,11 +25,12 @@ for tag in tags:
 headers = {'Content-type': 'application/json'}
 
 for jsonld in jsonlds:
-    json = {}
-    json['identifier'] = jsonld['identifier']
-    json['name'] = jsonld['name']
-    json['additionalType'] = jsonld['additionalType']
-    json['url'] = jsonld['url']
+    json = {
+        'identifier': jsonld['identifier'],
+        'name': jsonld['name'],
+        'additionalType': jsonld['additionalType'],
+        'url': jsonld['url']
+    }
 
     # TODO: Use solr de-dupe for this
     # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
