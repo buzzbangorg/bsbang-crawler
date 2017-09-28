@@ -45,7 +45,9 @@ def load_bioschemas_jsonld(url, post_to_solr=True):
 
 
 def load_from_sitemap(sitemap, post_to_solr=True):
-    for loc_elem in sitemap.findall('//{http://www.sitemaps.org/schemas/sitemap/0.9}loc'):
+    loc_elems = sitemap.findall('//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')
+    print('Found %d pages to crawl' % len(loc_elems))
+    for loc_elem in loc_elems:
         load_bioschemas_jsonld(loc_elem.text, post_to_solr=post_to_solr)
 
 
