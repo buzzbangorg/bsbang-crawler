@@ -1,9 +1,40 @@
 #!/usr/bin/env python3
 
 import argparse
+import canonicaljson
+import hashlib
 import lxml.etree as etree
+import requests
 
+from bioschemas_lib import MANDATORY_PROPS
 from bioschemas_lib.parser import BioschemasParser
+
+
+def create_solr_json_with_mandatory_properties(jsonld):
+    solr_json = {}
+    for prop in MANDATORY_PROPS:
+        solr_json[prop] = jsonld[prop]
+
+    return solr_json
+
+
+def load_bioschemas_jsonld(url):
+    jsonlds = bsParser.parse_bioschemas_jsonld_from_url(url)
+
+    headers = {'Content-type': 'application/json'}
+
+    for jsonld in jsonlds:
+        solr_json = create_solr_json_with_mandatory_properties(jsonld)
+
+        # TODO: Use solr de-dupe for this
+        # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
+        solr_json['id'] = hashlib.sha256(canonicaljson.encode_canonical_json(solr_json)).hexdigest()
+
+        print(solr_json)
+
+        if config['post_to_solr']:
+            r = requests.post(config['solr_json_doc_update_path'] + '?commit=true', json=solr_json, headers=headers)
+            print(r.text)
 
 
 def load_from_sitemap(sitemap):
@@ -13,7 +44,7 @@ def load_from_sitemap(sitemap):
     i = 1
     for loc_elem in loc_elems:
         print('Crawling %d of %d pages' % (i, loc_elems_len))
-        bsParser.load_bioschemas_jsonld_from_url(loc_elem.text)
+        load_bioschemas_jsonld(loc_elem.text)
         i += 1
 
 
@@ -43,6 +74,11 @@ parser.add_argument('siteUrl', help='Site to crawl. For example, http://www.synb
 parser.add_argument('--nosolr', action='store_true', help='Don''t actually load anything into Solr, just fetch')
 args = parser.parse_args()
 
-bsParser = BioschemasParser(post_to_solr=not args.nosolr)
+config = {
+    'post_to_solr': not args.nosolr,
+    'solr_json_doc_update_path': 'http://localhost:8983/solr/bsbang/update/json/docs'
+}
+
+bsParser = BioschemasParser()
 
 load_sitemap(args.siteUrl + '/sitemap.xml')
