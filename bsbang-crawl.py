@@ -10,6 +10,23 @@ import bs4
 import canonicaljson
 # import uuid
 
+context = {'mandatory_props': ['identifier', 'name', 'additionalType', 'url']}
+
+
+def assert_mandatory_jsonld_properties(jsonld):
+    """Assert that the property exists in the jsonld"""
+    for prop in context['mandatory_props']:
+        if prop not in jsonld:
+            raise KeyError('Mandatory property %s not present' % (prop))
+
+
+def create_solr_json_with_mandatory_properties(jsonld):
+    solr_json = {}
+    for prop in context['mandatory_props']:
+        solr_json[prop] = jsonld[prop]
+
+    return solr_json
+
 
 def load_bioschemas_jsonld(url, post_to_solr=True):
     print('Loading page %s' % url)
@@ -26,12 +43,13 @@ def load_bioschemas_jsonld(url, post_to_solr=True):
     headers = {'Content-type': 'application/json'}
 
     for jsonld in jsonlds:
-        solr_json = {
-            'identifier': jsonld['identifier'],
-            'name': jsonld['name'],
-            'additionalType': jsonld['additionalType'],
-            'url': jsonld['url']
-        }
+        try:
+            assert_mandatory_jsonld_properties(jsonld)
+        except KeyError as err:
+            print('Ignoring %s as %s' % (jsonld, err))
+            continue
+
+        solr_json = create_solr_json_with_mandatory_properties(jsonld)
 
         # TODO: Use solr de-dupe for this
         # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
