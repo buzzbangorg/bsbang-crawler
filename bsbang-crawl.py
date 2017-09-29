@@ -28,13 +28,13 @@ def create_solr_json_with_mandatory_properties(jsonld):
     return solr_json
 
 
-def load_bioschemas_jsonld_from_url(url, post_to_solr=True):
+def load_bioschemas_jsonld_from_url(url):
     print('Loading page %s' % url)
     r = requests.get(url)
     load_bioschemas_jsonld_from_html(r.text)
 
 
-def load_bioschemas_jsonld_from_html(html, post_to_solr=True):
+def load_bioschemas_jsonld_from_html(html):
     soup = bs4.BeautifulSoup(html, 'html.parser')
     tags = soup.find_all('script', type='application/ld+json')
     print('Found %d ld+json sections' % len(tags))
@@ -61,38 +61,38 @@ def load_bioschemas_jsonld_from_html(html, post_to_solr=True):
 
         print(solr_json)
 
-        if post_to_solr:
+        if context['post_to_solr']:
             r = requests.post(solrJsonDocUpdatePath + '?commit=true', json=solr_json, headers=headers)
             print(r.text)
 
 
-def load_from_sitemap(sitemap, post_to_solr=True):
+def load_from_sitemap(sitemap):
     loc_elems = sitemap.findall('//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')
     loc_elems_len = len(loc_elems)
     print('Found %d pages to crawl' % loc_elems_len)
     i = 1
     for loc_elem in loc_elems:
         print('Crawling %d of %d pages' % (i, loc_elems_len))
-        load_bioschemas_jsonld_from_url(loc_elem.text, post_to_solr=post_to_solr)
+        load_bioschemas_jsonld_from_url(loc_elem.text)
         i += 1
 
 
-def load_from_sitemapindex(sitemapindex, post_to_solr=True):
+def load_from_sitemapindex(sitemapindex):
     # for loc_elem in sitemapindex_elem.findall('/sitemap/loc'):
     for loc_elem in sitemapindex.findall('//{http://www.sitemaps.org/schemas/sitemap/0.9}loc'):
-        load_sitemap(loc_elem.text, post_to_solr=post_to_solr)
+        load_sitemap(loc_elem.text)
 
 
-def load_sitemap(url, post_to_solr=True):
+def load_sitemap(url):
     sitemap = etree.parse(url)
     root_tag = sitemap.getroot().tag
 
     if root_tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}sitemapindex':
         print('Loading sitemap index %s' % url)
-        load_from_sitemapindex(sitemap, post_to_solr=post_to_solr)
+        load_from_sitemapindex(sitemap)
     elif root_tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}urlset':
         print('Loading sitemap %s' % url)
-        load_from_sitemap(sitemap, post_to_solr=post_to_solr)
+        load_from_sitemap(sitemap)
     else:
         print('Unrecognized root tag %s in sitemap from %s. Ignoring' % (root_tag, url))
 
@@ -107,4 +107,6 @@ parser.add_argument('siteUrl', help='Site to crawl. For example, http://www.synb
 parser.add_argument('--nosolr', action='store_true', help='Don''t actually load anything into Solr, just fetch')
 args = parser.parse_args()
 
-load_sitemap(args.siteUrl + '/sitemap.xml', post_to_solr=not args.nosolr)
+context['post_to_solr'] = not args.nosolr
+
+load_sitemap(args.siteUrl + '/sitemap.xml')
