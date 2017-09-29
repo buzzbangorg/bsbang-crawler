@@ -10,19 +10,22 @@ import bs4
 import canonicaljson
 # import uuid
 
-context = {'mandatory_props': ['identifier', 'name', 'additionalType', 'url']}
+config = {
+    'mandatory_props': ['identifier', 'name', 'additionalType', 'url'],
+    'post_to_solr': True
+}
 
 
 def assert_mandatory_jsonld_properties(jsonld):
     """Assert that the property exists in the jsonld"""
-    for prop in context['mandatory_props']:
+    for prop in config['mandatory_props']:
         if prop not in jsonld:
             raise KeyError('Mandatory property %s not present' % (prop))
 
 
 def create_solr_json_with_mandatory_properties(jsonld):
     solr_json = {}
-    for prop in context['mandatory_props']:
+    for prop in config['mandatory_props']:
         solr_json[prop] = jsonld[prop]
 
     return solr_json
@@ -61,7 +64,7 @@ def load_bioschemas_jsonld_from_html(html):
 
         print(solr_json)
 
-        if context['post_to_solr']:
+        if config['post_to_solr']:
             r = requests.post(solrJsonDocUpdatePath + '?commit=true', json=solr_json, headers=headers)
             print(r.text)
 
@@ -107,6 +110,6 @@ parser.add_argument('siteUrl', help='Site to crawl. For example, http://www.synb
 parser.add_argument('--nosolr', action='store_true', help='Don''t actually load anything into Solr, just fetch')
 args = parser.parse_args()
 
-context['post_to_solr'] = not args.nosolr
+config['post_to_solr'] = not args.nosolr
 
 load_sitemap(args.siteUrl + '/sitemap.xml')
