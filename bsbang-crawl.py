@@ -28,10 +28,14 @@ def create_solr_json_with_mandatory_properties(jsonld):
     return solr_json
 
 
-def load_bioschemas_jsonld(url, post_to_solr=True):
+def load_bioschemas_jsonld_from_url(url, post_to_solr=True):
     print('Loading page %s' % url)
     r = requests.get(url)
-    soup = bs4.BeautifulSoup(r.text, 'html.parser')
+    load_bioschemas_jsonld_from_html(r.text)
+
+
+def load_bioschemas_jsonld_from_html(html, post_to_solr=True):
+    soup = bs4.BeautifulSoup(html, 'html.parser')
     tags = soup.find_all('script', type='application/ld+json')
     print('Found %d ld+json sections' % len(tags))
 
@@ -69,7 +73,7 @@ def load_from_sitemap(sitemap, post_to_solr=True):
     i = 1
     for loc_elem in loc_elems:
         print('Crawling %d of %d pages' % (i, loc_elems_len))
-        load_bioschemas_jsonld(loc_elem.text, post_to_solr=post_to_solr)
+        load_bioschemas_jsonld_from_url(loc_elem.text, post_to_solr=post_to_solr)
         i += 1
 
 
