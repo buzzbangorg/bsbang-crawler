@@ -1,0 +1,6 @@
+<schema>
+    <field name='identifier' type='string'/>
+    <field name='name' type='text_en'/>
+    <field name='additionalType' type='string'/>
+    <field name='url' type='string'/>
+</schema>
