@@ -1,6 +1,6 @@
-= README =
+# README #
 
 This is the crawler component for Buzzbang.
 
-= TESTS =
+# TESTS #
 $ python -m unittest discover
