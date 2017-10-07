@@ -45,35 +45,40 @@ def load_bioschemas_jsonld(url):
             print(r.text)
 
 
-def load_from_sitemap(sitemap):
+def get_urls_from_loaded_sitemap(sitemap):
+    urls = set()
     loc_elems = sitemap.findall('//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')
     loc_elems_len = len(loc_elems)
     print('Found %d pages to crawl' % loc_elems_len)
-    i = 1
     for loc_elem in loc_elems:
-        print('Crawling %d of %d pages' % (i, loc_elems_len))
-        load_bioschemas_jsonld(loc_elem.text)
-        i += 1
+        urls.add(loc_elem.text)
+
+    return urls
 
 
-def load_from_sitemapindex(sitemapindex):
+def get_urls_from_loaded_sitemapindex(sitemapindex):
+    """Get all the webpage urls in a retrieved sitemap index XML"""
+    urls = set()
     # for loc_elem in sitemapindex_elem.findall('/sitemap/loc'):
     for loc_elem in sitemapindex.findall('//{http://www.sitemaps.org/schemas/sitemap/0.9}loc'):
-        load_sitemap(loc_elem.text)
+        urls.update(get_urls_from_sitemap(loc_elem.text))
+
+    return urls
 
 
-def load_sitemap(url):
-    sitemap = etree.parse(url)
+def get_urls_from_sitemap(sitemap_url):
+    """Get all the webpage urls we can reach from a sitemap, whether this is a sitemap XML or a sitemap index XML"""
+    sitemap = etree.parse(sitemap_url)
     root_tag = sitemap.getroot().tag
 
     if root_tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}sitemapindex':
-        print('Loading sitemap index %s' % url)
-        load_from_sitemapindex(sitemap)
+        print('Loading sitemap index %s' % sitemap_url)
+        return get_urls_from_loaded_sitemapindex(sitemap)
     elif root_tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}urlset':
-        print('Loading sitemap %s' % url)
-        load_from_sitemap(sitemap)
+        print('Loading sitemap %s' % sitemap_url)
+        return get_urls_from_loaded_sitemap(sitemap)
     else:
-        print('Unrecognized root tag %s in sitemap from %s. Ignoring' % (root_tag, url))
+        print('Unrecognized root tag %s in sitemap from %s. Ignoring' % (root_tag, sitemap_url))
 
 
 # MAIN
@@ -93,6 +98,12 @@ config = {
 bsParser = BioschemasParser()
 
 if args.url.endswith('/sitemap.xml'):
-    load_sitemap(args.url)
+    urls = get_urls_from_sitemap(args.url)
+    urlsLen = len(urls)
+    i = 1
+    for url in urls:
+        print('Crawling %d of %d pages' % (i, urlsLen))
+        load_bioschemas_jsonld(url)
+        i += 1
 else:
     load_bioschemas_jsonld(args.url)
