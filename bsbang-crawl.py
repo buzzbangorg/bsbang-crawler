@@ -3,22 +3,22 @@
 import argparse
 import canonicaljson
 import hashlib
-import lxml.etree as etree
 import requests
 
-from bioschemas_lib import MANDATORY_PROPERTIES, SCHEMA_INHERITANCE_GRAPH
-from bioschemas_lib.parser import BioschemasParser
+import bioschemas_lib
+import bioschemas_lib.crawler
+import bioschemas_lib.parser
 
 
 def create_solr_json_with_mandatory_properties(schema, jsonld):
     solr_json = {}
 
-    if schema in MANDATORY_PROPERTIES:
-        for prop in MANDATORY_PROPERTIES[schema]:
+    if schema in bioschemas_lib.MANDATORY_PROPERTIES:
+        for prop in bioschemas_lib.MANDATORY_PROPERTIES[schema]:
             print('Adding "%s":"%s" for %s' % (prop, jsonld[prop], schema))
             solr_json[prop] = jsonld[prop]
 
-    parent_schema = SCHEMA_INHERITANCE_GRAPH[schema]
+    parent_schema = bioschemas_lib.SCHEMA_INHERITANCE_GRAPH[schema]
     if parent_schema is not None:
         solr_json.update(create_solr_json_with_mandatory_properties(parent_schema, jsonld))
 
@@ -26,7 +26,8 @@ def create_solr_json_with_mandatory_properties(schema, jsonld):
 
 
 def load_bioschemas_jsonld(url):
-    jsonlds = bsParser.parse_bioschemas_jsonld_from_url(url)
+    parser = bioschemas_lib.parser.BioschemasParser()
+    jsonlds = parser.parse_bioschemas_jsonld_from_url(url)
 
     headers = {'Content-type': 'application/json'}
 
@@ -45,42 +46,6 @@ def load_bioschemas_jsonld(url):
             print(r.text)
 
 
-def get_urls_from_loaded_sitemap(sitemap):
-    urls = set()
-    loc_elems = sitemap.findall('//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')
-    loc_elems_len = len(loc_elems)
-    print('Found %d pages to crawl' % loc_elems_len)
-    for loc_elem in loc_elems:
-        urls.add(loc_elem.text)
-
-    return urls
-
-
-def get_urls_from_loaded_sitemapindex(sitemapindex):
-    """Get all the webpage urls in a retrieved sitemap index XML"""
-    urls = set()
-    # for loc_elem in sitemapindex_elem.findall('/sitemap/loc'):
-    for loc_elem in sitemapindex.findall('//{http://www.sitemaps.org/schemas/sitemap/0.9}loc'):
-        urls.update(get_urls_from_sitemap(loc_elem.text))
-
-    return urls
-
-
-def get_urls_from_sitemap(sitemap_url):
-    """Get all the webpage urls we can reach from a sitemap, whether this is a sitemap XML or a sitemap index XML"""
-    sitemap = etree.parse(sitemap_url)
-    root_tag = sitemap.getroot().tag
-
-    if root_tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}sitemapindex':
-        print('Loading sitemap index %s' % sitemap_url)
-        return get_urls_from_loaded_sitemapindex(sitemap)
-    elif root_tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}urlset':
-        print('Loading sitemap %s' % sitemap_url)
-        return get_urls_from_loaded_sitemap(sitemap)
-    else:
-        print('Unrecognized root tag %s in sitemap from %s. Ignoring' % (root_tag, sitemap_url))
-
-
 # MAIN
 parser = argparse.ArgumentParser('Crawl a sitemap XML or webpage and insert the bioschemas information into Solr.')
 parser.add_argument('url',
@@ -95,10 +60,8 @@ config = {
     'solr_json_doc_update_path': 'http://localhost:8983/solr/bsbang/update/json/docs'
 }
 
-bsParser = BioschemasParser()
-
 if args.url.endswith('/sitemap.xml'):
-    urls = get_urls_from_sitemap(args.url)
+    urls = bioschemas_lib.crawler.get_urls_from_sitemap(args.url)
     urlsLen = len(urls)
     i = 1
     for url in urls:
