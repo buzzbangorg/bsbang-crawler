@@ -2,6 +2,13 @@ import bioschemas_lib
 
 
 def create_solr_json_with_mandatory_properties(schema, jsonld):
+    """
+    Create JSON we can put into Solr from the Bioschemas JsonLD
+
+    :param schema:
+    :param jsonld:
+    :return:
+    """
     solr_json = {}
 
     if schema in bioschemas_lib.MANDATORY_PROPERTIES:

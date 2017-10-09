@@ -1,5 +1,5 @@
 MANDATORY_PROPERTIES = {
-    'Thing': ['identifier', 'name', 'url'],
+    'Thing': ['@type', 'identifier', 'name', 'url'],
     'PhysicalEntity': ['additionalType']
 }
 
@@ -11,3 +11,6 @@ SCHEMA_INHERITANCE_GRAPH = {
 }
 
 SCHEMAS_TO_PARSE = ['DataCatalog', 'PhysicalEntity']
+
+# If a type is not in the map, then assume the source and target names are the same
+JSONLD_TO_SOLR_MAP = {'@type', 'AT_type'}
