@@ -1,11 +1,9 @@
-#!/usr/bin/env python3
-
 import unittest
 
 from bioschemas_lib.parser import BioschemasParser
 
 
-class TestBioschemasParserMethods(unittest.TestCase):
+class TestParserMethods(unittest.TestCase):
     def test_load_bioschemas_jsonld_from_html(self):
         html = '''<script type="application/ld+json">
         {
