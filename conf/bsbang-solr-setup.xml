@@ -1,6 +1,6 @@
 <schema>
     <!-- generic -->
-    <field name='@type' type='string'/>
+    <field name='AT_type' type='string'/>
     <field name='name' type='text_en'/>
     <field name='identifier' type='string'/>
     <field name='description' type='text_en'/>
