@@ -15,7 +15,7 @@ class BioschemasParser:
         }
 
     def assert_mandatory_jsonld_properties(self, schema, jsonld):
-        print('Asserting schema %s' % schema)
+        # print('Asserting schema %s' % schema)
         """Assert that the properties we require for a schema, and its parent schemas, exists in the jsonld"""
         if schema in self.config['mandatory_properties']:
             for prop in self.config['mandatory_properties'][schema]:

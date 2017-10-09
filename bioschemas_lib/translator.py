@@ -9,6 +9,8 @@ def create_solr_json_with_mandatory_properties(schema, jsonld):
     :param jsonld:
     :return:
     """
+
+    # print('Inspecting schema %s with jsonld size %d' % (schema, len(jsonld)))
     solr_json = {}
 
     if schema in bioschemas_lib.MANDATORY_PROPERTIES:

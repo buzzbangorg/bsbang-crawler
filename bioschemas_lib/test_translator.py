@@ -17,3 +17,4 @@ class TestTranslatorMethods(unittest.TestCase):
         solr_json = bioschemas_lib.translator.create_solr_json_with_mandatory_properties(jsonld['@type'], jsonld)
         self.assertEqual(solr_json['name'], 'Gene arcA E. coli str. K-12 substr. MG1655 b4401')
         self.assertEqual(solr_json['AT_type'], 'PhysicalEntity')
+        self.assertEqual(solr_json['additionalType'], 'http://www.ebi.ac.uk/ols/ontologies/so/terms?obo_id=SO:0000704')
