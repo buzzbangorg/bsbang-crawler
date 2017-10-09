@@ -8,21 +8,7 @@ import requests
 import bioschemas_lib
 import bioschemas_lib.crawler
 import bioschemas_lib.parser
-
-
-def create_solr_json_with_mandatory_properties(schema, jsonld):
-    solr_json = {}
-
-    if schema in bioschemas_lib.MANDATORY_PROPERTIES:
-        for prop in bioschemas_lib.MANDATORY_PROPERTIES[schema]:
-            print('Adding "%s":"%s" for %s' % (prop, jsonld[prop], schema))
-            solr_json[prop] = jsonld[prop]
-
-    parent_schema = bioschemas_lib.SCHEMA_INHERITANCE_GRAPH[schema]
-    if parent_schema is not None:
-        solr_json.update(create_solr_json_with_mandatory_properties(parent_schema, jsonld))
-
-    return solr_json
+import bioschemas_lib.translator
 
 
 def load_bioschemas_jsonld(url):
@@ -33,7 +19,7 @@ def load_bioschemas_jsonld(url):
 
     for jsonld in jsonlds:
         schema = jsonld['@type']
-        solr_json = create_solr_json_with_mandatory_properties(schema, jsonld)
+        solr_json = bioschemas_lib.translator.create_solr_json_with_mandatory_properties(schema, jsonld)
 
         # TODO: Use solr de-dupe for this
         # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
