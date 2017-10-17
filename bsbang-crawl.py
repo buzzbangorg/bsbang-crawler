@@ -40,25 +40,27 @@ def load_bioschemas_jsonld_from_html(url):
     :return:
     """
 
-    parser = bioschemas_lib.parser.BioschemasParser()
-    jsonlds = parser.parse_bioschemas_jsonld_from_url(url)
+    try:
+        parser = bioschemas_lib.parser.BioschemasParser()
+        jsonlds = parser.parse_bioschemas_jsonld_from_url(url)
 
-    headers = {'Content-type': 'application/json'}
+        headers = {'Content-type': 'application/json'}
 
-    for jsonld in jsonlds:
-        schema = jsonld['@type']
-        solr_json = bioschemas_lib.translator.create_solr_json_with_mandatory_properties(schema, jsonld)
+        for jsonld in jsonlds:
+            schema = jsonld['@type']
+            solr_json = bioschemas_lib.translator.create_solr_json_with_mandatory_properties(schema, jsonld)
 
-        # TODO: Use solr de-dupe for this
-        # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
-        solr_json['id'] = hashlib.sha256(canonicaljson.encode_canonical_json(solr_json)).hexdigest()
+            # TODO: Use solr de-dupe for this
+            # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
+            solr_json['id'] = hashlib.sha256(canonicaljson.encode_canonical_json(solr_json)).hexdigest()
 
-        print(solr_json)
+            print(solr_json)
 
-        if config['post_to_solr']:
-            r = requests.post(config['solr_json_doc_update_path'] + '?commit=true', json=solr_json, headers=headers)
-            print(r.text)
-
+            if config['post_to_solr']:
+                r = requests.post(config['solr_json_doc_update_path'] + '?commit=true', json=solr_json, headers=headers)
+                print(r.text)
+    except Exception as e:
+        print('Ignoring failure with %s' % str(e))
 
 # MAIN
 parser = argparse.ArgumentParser('Crawl a sitemap XML or webpage and insert the bioschemas information into Solr.')
