@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script type="text/javascript" src="FAIRsharing_files/03d748a137"></script><script src="FAIRsharing_files/nr-1059.js"></script><script type="text/javascript" async="" src="FAIRsharing_files/ga.js"></script><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(2),u=e(3),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}finally{f.emit("fn-end",[c.now()],t)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now()])}},{}],2:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],3:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],4:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=m(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){v[e]=m(e).concat(n)}function m(e){return v[e]||[]}function w(e){return p[e]=p[e]||o(t)}function g(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var v={},y={},b={on:l,emit:t,get:w,listeners:m,context:n,buffer:g,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(2),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=h.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+h.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===d.readyState&&i()}function i(){f("mark",["domContent",a()+h.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-h.offset}var u=(new Date).getTime(),f=e("handle"),c=e(2),s=e("ee"),p=window,d=p.document,l="addEventListener",m="attachEvent",w=p.XMLHttpRequest,g=w&&w.prototype;NREUM.o={ST:setTimeout,SI:p.setImmediate,CT:clearTimeout,XHR:w,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1059.min.js"},b=w&&g&&g[l]&&!/CriOS/.test(navigator.userAgent),h=n.exports={offset:u,now:a,origin:v,features:{},xhrWrappable:b};e(1),d[l]?(d[l]("DOMContentLoaded",i,!1),p[l]("load",r,!1)):(d[m]("onreadystatechange",o),p[m]("onload",r)),f("mark",["firstbyte",u],null,"api");var x=0,E=e(4)},{}]},{},["loader"]);</script><script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","queueTime":0,"licenseKey":"03d748a137","agent":"","transactionName":"NQNaMhNSW0EDWkFYCwxJfhMPUEFbDVcaUw0NFVAHE1pbVT1OUFNKFA9dERIdUlcMXEdQCFgPVgIESw==","applicationID":"29435076","errorBeacon":"bam.nr-data.net","applicationTime":112}</script>
+    <meta name="google-site-verification" content="QdcqRD5HFjdLWvACKwttHOU3V231olPNnoV05TYO-rQ">
+
+    <link rel="shortcut icon" href="https://fairsharing.org/static/img/fairsharing-favicon.ico">
+
+    <link href="FAIRsharing_files/css.css" rel="stylesheet" type="text/css">
+    <link href="FAIRsharing_files/font-awesome.css" rel="stylesheet" type="text/css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+        <link rel="stylesheet" href="FAIRsharing_files/bs-styles.css">
+    
+
+    <link href="FAIRsharing_files/home.css" rel="stylesheet" type="text/css">
+
+     
+    <title> FAIRsharing </title>
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "DataCatalog",
+        "identifier":"https://identifiers.org/MIR:00000364",
+        "name": "FAIRsharing.org",
+        "description": "A manually curated, informative and educational resource on data and metadata standards, inter-related to databases/data repositories and funder and journal publisher data policies from across disciplines. FAIRsharing is an ELIXIR-UK node resource and has an active role in the RDA and Force11 data initiatives.",
+        "url": "https://fairsharing.org/",
+        "dataset": [
+            {
+                "@type" : "Dataset",
+                "name" : "Metadata Standard",
+                "description" : "A manually curated registry of standards, split into three types - Terminology Artifacts (ontologies, e.g. Gene Ontology), Models and Formats (conceptual schema, formats, data models, e.g. FASTA), and Reporting Guidelines (e.g. the ARRIVE guidelines for in vivo animal testing). These are linked to the databases that implement them and the funder and journal publisher data policies that recommend or endorse their use.",
+                "identifier": "https://www.fairsharing.org/bsg-sXXXXXX",
+                "url" : "https://fairsharing.org/standards",
+                "keywords" : "Standards, Metadata, Formats, Ontologies, Terminology Artifacts, Reporting Guidelines",
+                "includedInDataCatalog" : "https://www.fairsharing.org"
+            },
+            {
+                "@type" : "Dataset",
+                "name" : "Database",
+                "description": "A manually curated registry of databases/data repositories, conforming to the BioDBcore standard (from the Life Sciences). These are linked to the standards that they use and the funder and journal publisher data policies that recommend or endorse their use.",
+                "identifier": "https://www.fairsharing.org/biodbcoreXXXXXX",
+                "url": "https://fairsharing.org/databases",
+                "keywords": "Database, Data repository",
+                "includedInDataCatalog" : "https://www.fairsharing.org"
+            },
+            {
+                "@type" : "Dataset",
+                "name" : "Data Policy",
+                "description": "A manually curated registry of data policies from research funders, journal publishers, societies, and other organisations. These are linked to the databases and standards that they recommend for use",
+                "identifier": "https://www.fairsharing.org/bsg-pXXXXXX",
+                "url": "https://fairsharing.org/policies",
+                "keywords": "Data policy, journal, funder, society"
+            }
+            ],
+        "keywords": "registry, life science, natural science, social science, ",
+        "provider":
+            [
+            {
+            "@type":"Person",
+            "name": "FAIRsharing.org support",
+            "email": "biosharing-contact-us@lists.sf.net"
+            },
+            {
+            "@type":"Organization",
+            "name": "Oxford e-Research Centre, University of Oxford",
+            "url": "http://www.oerc.ox.ac.uk/"
+            },
+            {
+            "@type":"Organization",
+            "name": "ELIXIR-UK",
+            "url": "http://www.elixir-uk.org"
+            },
+            {
+            "alternateName": ["FAIRsharing.org Registry", "BioSharing.org"]
+            }
+            ],
+        "license": {
+            "@type": "CreativeWork",
+            "name": "Creative Commons CC BY-SA 4.0 Attribution",
+            "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+            },
+        "publication":[
+            {
+                "@type":"PublicationEvent",
+                "name": "BioSharing: curated and crowd-sourced metadata standards, databases and data policies in the life sciences.",
+                "url": "https://academic.oup.com/database/article-lookup/doi/10.1093/database/baw075"
+            }
+        ]
+
+}
+</script>
+
+</head>
+
+<body class="home">
+
+<nav class="site-nav navbar navbar-default navbar-fixed-top">
+
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="pull-left" href="https://fairsharing.org/">
+            <img src="FAIRsharing_files/FAIRsharing-sdp.svg" style="margin-top: -20px;" width="300px">
+        </a>
+
+    </div>
+    <div id="navbar" class="navbar-collapse collapse pull-right" aria-expanded="false" style="height: 1px;">
+        <ul class="nav nav-pills" id="menu-info">
+
+            <li class="active"><a href="https://fairsharing.org/standards">Standards</a></li>
+            <li class="active"><a href="https://fairsharing.org/databases">Databases</a></li>
+            <li class="active"><a href="https://fairsharing.org/policies">Policies</a></li>
+            <li class="active"><a href="https://fairsharing.org/collections">Collections</a></li>
+            <li class="inactive"><a class="highlight" href="https://fairsharing.org/new">Add/Claim
+                Content</a></li>
+            <li class="inactive"><a href="https://fairsharing.org/summary-statistics/?collection=all">Stats</a>
+            </li>
+
+            <li class="account-section">
+                
+                    <a href="https://fairsharing.org/accounts/login">Log in or Register</a>
+                
+            </li>
+
+            <!--
+            <li>
+               <a href="http://www.elixir-uk.org/" target="_blank">
+                   <img src="https://fairsharing.org/static/img/home/elixir_transparent.png" style="margin-top:  -20px;" width="60px">
+               </a>
+            </li>
+            -->
+
+        </ul>
+
+    </div>
+
+</nav>
+
+
+<div class="clearfix"></div>
+
+<div class="row-fluid content-holder">
+
+    <div class="container-fluid light-grey-bg">
+        <div class="row-fluid text-center">
+            <div class="col-md-12">
+                
+<div class="alert alert-dismissable namechange-warning" id="namechange">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close" id="banner_seen">×</a>
+    FAIRsharing is here! From our first incarnation, BioSharing.org, 
+which focussed on the life sciences, we are growing into 
+FAIRsharing.org, to serve users across all disciplines and support 
+Findable, Accessible, Interoperable and Reusable (FAIR) data.
+</div>
+
+
+                <p class="lead main-tagline">
+                    A curated, informative and educational resource on data and metadata <i>standards</i>,
+                     inter-related to <i>databases</i> and data <i>policies</i>.
+                </p>
+                
+                
+
+
+
+
+
+
+
+
+
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row-eq-height">
+                <div class="col-md-4">
+                    <div class="top-usp">
+                        <a href="https://fairsharing.org/recommendations" class="btn btn-lg btn-info">Find</a>
+                        <br><br>
+                        <img src="FAIRsharing_files/usp-recommend.svg" width="260px">
+                        <p>Standards and/or databases
+                            recommended by journal
+                            or funder data policies.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="top-usp">
+                        <a href="https://fairsharing.org/collections" class="btn btn-lg btn-info">Discover</a>
+                        <br><br>
+                        <img src="FAIRsharing_files/usp-collection.svg" width="260px">
+                        <p>Standards and/or
+                            databases grouped by domain,
+                            species or organization.
+
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="top-usp">
+                        <a href="https://fairsharing.org/educational" class="btn btn-lg btn-info">Learn</a>
+                        <br><br>
+                        <img src="FAIRsharing_files/usp-learn.svg" width="230px">
+                        <p>About standards, their
+                        use in databases and policies,
+                        and how we can help you.
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row-fluid text-center">
+
+        <div class="clearfix"></div>
+        <div class="row-fluid row-eq-height navy-bg-darker">
+            <div class="search-area col-md-7 col-sm-12 col-xs-12 text-center padtop50 navy-bg-darker">
+
+                <form class="main-search-form" action="search">
+                    <input name="q" id="search-text-box" placeholder="Search FAIRsharing" type="text">
+                    <button type="submit" class="btn btn-lg btn-success submit">Search
+                    </button>
+
+                    <div id="search-selectors" style="text-align: center;">
+                        <ul id="search-selectors">
+                            <li>
+                                <label id="first-search-selector">
+                                    <input name="content" value="standard" class="checkbox" style="margin-right: 5px;" checked="checked" type="checkbox">
+                                    Standards
+                                </label></li>
+
+                            <li>
+                                <label>
+                                    <input name="content" value="biodbcore" class="checkbox" style="margin-right: 5px;" checked="checked" type="checkbox">
+                                    Databases
+                                </label></li>
+
+                            <li><label>
+                                <input name="content" value="policy" class="checkbox" checked="checked" type="checkbox">
+                                Policies
+                            </label></li>
+
+                            <li><label>
+                                <input name="content" value="collection" class="checkbox" style="margin-right: 5px;" checked="checked" type="checkbox">
+                                Collections/Recommendations
+                            </label></li>
+                        </ul>
+                    </div>
+                </form>
+                <br>
+
+            </div>
+
+
+            <div class="recommender search-area blue-bg-darker col-md-2 col-sm-6 hidden-xs text-center">
+                <a href="https://fairsharing.org/advanced-search?search_state=visible">
+                    <h4>Advanced Search</h4>
+                    <img src="FAIRsharing_files/advanced-search.svg" width="90%">
+                    <p>Fine grained control over your search.</p>
+                </a>
+            </div>
+
+            <div class="recommender search-area col-md-2 col-sm-6 hidden-xs text-center">
+                <a href="https://fairsharing.org/askFAIRsharing/wizard">
+                    <h4>Search Wizard</h4>
+                    <img src="FAIRsharing_files/ask_FAIRsharing.svg" class="ask_biosharing" width="90%">
+                    <p>Let us guide you to your results.</p>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row-fluid biosharing-registries">
+
+            <div class="col-md-4 col-sm-4 col-xs-12 text-center">
+                <div class="col-md-12 registry">
+                    <img src="FAIRsharing_files/home-standards.svg" width="160px">
+
+                    <h4>708 Standards</h4>
+
+                    <div class="registry-links">
+                        
+                            <ul>
+                                
+
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-sm-9 col-md-9">
+                                                <a href="https://fairsharing.org/standards/?q=&amp;selected_facets=type_exact:terminology%20artifact">Terminology Artifact</a>
+
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 text-right link-count">
+                                                
+                                                    350
+                                                
+                                                
+                                                
+                                            </div>
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                
+
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-sm-9 col-md-9">
+                                                <a href="https://fairsharing.org/standards/?q=&amp;selected_facets=type_exact:model/format">Model/Format</a>
+
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 text-right link-count">
+                                                
+                                                
+                                                    241
+                                                
+                                                
+                                            </div>
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                
+
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-sm-9 col-md-9">
+                                                <a href="https://fairsharing.org/standards/?q=&amp;selected_facets=type_exact:reporting%20guideline">Reporting Guideline</a>
+
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 text-right link-count">
+                                                
+                                                
+                                                
+                                                    117
+                                                
+                                            </div>
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                
+                                <li>&nbsp;</li>
+
+                            </ul>
+                        
+                        <a href="https://fairsharing.org/standards" class="btn btn-md btn-blue">View
+                            all</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4 col-xs-12 text-center light-grey-bg">
+                <div class="col-md-12 registry">
+                    <img src="FAIRsharing_files/home-db.svg" width="160px">
+                    <h4>983 Databases</h4>
+                    <div class="registry-links">
+                        
+                            <ul>
+                                
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-sm-9 col-md-9">
+                                                <a href="https://fairsharing.org/biodbcore/?q=&amp;selected_facets=domains_exact:Life%20Science">Life Science</a>
+
+                                            </div>
+                                            
+                                                <div class="col-xs-3 col-sm-3 col-md-3 text-right link-count">737</div>
+                                            
+                                        </div>
+                                    </li>
+                                
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-sm-9 col-md-9">
+                                                <a href="https://fairsharing.org/biodbcore/?q=&amp;selected_facets=domains_exact:Biomedical%20Science">Biomedical Science</a>
+
+                                            </div>
+                                            
+                                                <div class="col-xs-3 col-sm-3 col-md-3 text-right link-count">182</div>
+                                            
+                                        </div>
+                                    </li>
+                                
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-sm-9 col-md-9">
+                                                <a href="https://fairsharing.org/biodbcore/?q=&amp;selected_facets=domains_exact:General%20purpose">General Purpose</a>
+
+                                            </div>
+                                            
+                                                <div class="col-xs-3 col-sm-3 col-md-3 text-right link-count">10</div>
+                                            
+                                        </div>
+                                    </li>
+                                
+                                <li>&nbsp;</li>
+
+                            </ul>
+                        
+                        <a href="https://fairsharing.org/databases" class="btn btn-md btn-blue">View
+                            all</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4 col-xs-12 text-center">
+                <div class="col-md-12 registry">
+                    <img src="FAIRsharing_files/home-policies.svg" width="160px">
+                    <h4>98 Policies</h4>
+                    <div class="registry-links">
+                        
+                            <ul>
+                                
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-sm-9 col-md-9">
+                                                <a href="https://fairsharing.org/policies?q=&amp;selected_facets=subtype_exact:Funder">Funder</a>
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 text-right link-count">
+                                                
+                                                
+                                                    22
+                                                
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </li>
+                                
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-sm-9 col-md-9">
+                                                <a href="https://biosharing.org/policies?q=&amp;selected_facets=subtype_exact:Journal">Journal</a>
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 text-right link-count">
+                                                
+                                                    68
+                                                
+                                                
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </li>
+                                
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-xs-9 col-sm-9 col-md-9">
+                                                <a href="https://fairsharing.org/policies?q=&amp;selected_facets=subtype_exact:Society">Society</a>
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 text-right link-count">
+                                                
+                                                
+                                                
+                                                
+                                                    4
+                                                
+                                            </div>
+                                        </div>
+                                    </li>
+                                
+                                <li>&nbsp;</li>
+
+                            </ul>
+                        
+                        <a href="https://fairsharing.org/policies" class="btn btn-md btn-blue">View
+                            all</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div id="headline-container" class="hidden-sm hidden-xs ">
+
+            <h2 class="header">How can we help?</h2>
+
+            <br><br>
+
+            <div id="developer" class="header_section row-fluid" style="display: none;">
+                <div class="col-lg-4 col-md-4 col-sm-12 text-right" id="developer-image">
+                    <img src="FAIRsharing_files/developer.svg" height="240px">
+                </div>
+
+                <div class="col-lg-8 col-md-8 text-left">
+
+                    <div class="lead">
+                        <h3>Developer: seeking to make your resource more
+                            findable?</h3>
+                        <p>Register or update your standard and/or database in
+                            our registries; make them more discoverable to
+                            other users and get credit for it...<a href="https://fairsharing.org/educational/#faq6-3">[read
+                                more]</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="researcher" class="header_section row-fluid" style="display: none;">
+                <div class="col-lg-4 col-md-4 col-sm-12 text-right" id="researcher-image">
+                    <img src="FAIRsharing_files/researcher.svg" height="240px">
+                </div>
+
+                <div class="col-lg-8 col-md-8 col-sm-8 text-left">
+
+                    <div class="lead">
+                        <h3>Researcher/curator: looking for guidance?</h3>
+                        <p> Find the appropriate standard and database for your
+                            dataset. See journal requirements and journal and
+                            funding agency data policies...<a href="https://fairsharing.org/educational/#faq6-1">[read
+                                more]</a></p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="funder" class="header_section row-fluid" style="display: block; overflow: hidden; height: 163.004px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+                <div class="col-lg-4 col-md-4 col-sm-12 text-right" id="funder-image">
+                    <img src="FAIRsharing_files/funder.svg" height="240px">
+                </div>
+
+                <div class="col-lg-8 col-md-8 col-sm-8 text-left">
+
+                    <div class="lead">
+                        <h3>Funder: developing data policies?</h3>
+                        <p>Refine your policy by discovering which standards and
+                            databases are inter-related, more used and mature,
+                            or are funded by you...<a href="https://fairsharing.org/educational/#faq6-5">[read more]</a>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="journal" class="header_section row-fluid" style="display: block; overflow: hidden; height: 77.675px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+                <div class="col-lg-4 col-md-4 col-sm-12 text-right" id="journal-image">
+                    <img src="FAIRsharing_files/journal.svg" height="240px">
+                </div>
+
+                <div class="col-lg-8 col-md-8 col-sm-8 text-left">
+
+                    <div class="lead">
+                        <h3>Journal editor/librarian: creating guidelines?</h3>
+                        <p>Create your view on an inter-related set of
+                            standards and/or databases, a simple way to
+                            complement your data guidelines and assist your
+                            users...<a href="https://fairsharing.org/educational/#faq6-4">[read
+                                more]</a></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row-fluid hidden-sm hidden-xs">
+        <div class="who-are-you text-center">
+            <ul class="toggles">
+                <li id="toggle-developer" class="toggle" data-target="developer">Developer
+                </li>
+                <li id="toggle-researcher" class="toggle" data-target="researcher">Researcher/Curator
+                </li>
+                <li id="toggle-funder" class="toggle" data-target="funder">
+                    Funder
+                </li>
+                <li id="toggle-journal" class="toggle selected" data-target="journal">
+                    Editor/Librarian
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="clearfix"></div>
+
+    <div class="row-fluid biosharing-communities">
+        <div class="row">
+            <div class="col-md-12 col-xs-12 text-center">
+                <h4>Our Community of 69 Journals,
+                    Funders, and Databases Includes</h4>
+                <ul>
+                    
+                        <li>
+                            <a href="http://www.nature.com/npg_/index_npg.html" target="_blank">
+                                <img src="FAIRsharing_files/NPG.JPG" alt="image" class="commons-logo" align="middle" width="190">
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://www.force11.org/" target="_blank">
+                                <img src="FAIRsharing_files/logo_force11.png" alt="image" class="commons-logo" align="middle" width="190">
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="" target="_blank">
+                                <img src="FAIRsharing_files/PLOS-logo-256x80px.png" alt="image" class="commons-logo" align="middle" width="190">
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="http://f1000.com/" target="_blank">
+                                <img src="FAIRsharing_files/logo_faculty_1000.png" alt="image" class="commons-logo" align="middle" width="190">
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="http://www.datadryad.org/" target="_blank">
+                                <img src="FAIRsharing_files/logo-dryad.gif" alt="image" class="commons-logo" align="middle" width="190">
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://www.embl-abr.org.au/" target="_blank">
+                                <img src="FAIRsharing_files/embl-australia-logo-greyscale.jpeg" alt="image" class="commons-logo" align="middle" width="190">
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="http://www.elixir-uk.org/" target="_blank">
+                                <img src="FAIRsharing_files/elixr_uk_bw_2.png" alt="image" class="commons-logo" align="middle" width="190">
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="https://www.rd-alliance.org/" target="_blank">
+                                <img src="FAIRsharing_files/RDA_logo_cbIKmKK.png" alt="image" class="commons-logo" align="middle" width="190">
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="http://www.embo.org/embo-press" target="_blank">
+                                <img src="FAIRsharing_files/embo_logo.png" alt="image" class="commons-logo" align="middle" width="190">
+                            </a>
+                        </li>
+                    
+                </ul>
+
+                <div>
+                    <a href="https://fairsharing.org/communities" class="btn btn-md btn-blue">View
+                        all</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+</div>
+
+
+<!-- more survey stuff -->
+<div id="survey_question" style="display:none">
+    <a class="b-close"><img src="FAIRsharing_files/close.png"></a>
+
+    <h3>We need your help!</h3>
+
+    <p>Do you have 5-10 minutes to help FAIRsharing prioritize future
+        enhancements?</p>
+
+    <p>Then please fill out <a href="http://goo.gl/forms/BQ9lRMNQxE" target="_blank">this short questionnaire</a>
+        to
+        prioritise the improvements that are of greatest importance to you.
+    </p>
+
+    <p>Your views will help us choose which enhancements to provide first.
+        Thank you very much!</p>
+</div>
+
+<div class="clearfix"></div>
+
+
+<div class="clearfix"></div>
+<div id="footer" class="container-fluid">
+    <div class="row-fluid">
+        <div class="upper_footer col-md-12">
+            <div id="row-fluid">
+                <div class="footer_container">
+
+                    <ul class="footer_links col-md-3">
+                        <img src="FAIRsharing_files/FAIRsharing-logo.svg" style="text-align: center;" width="80%">
+                    </ul>
+
+
+                    <ul class="footer_links col-md-3">
+                        <h4>Developed by</h4>
+                        <li><a href="https://fairsharing.org/communities#team" target="_blank">The
+                            FAIRsharing team</a></li>
+                        <li><a href="http://www.oerc.ox.ac.uk/" target="_blank">Oxford e-Research Centre</a></li>
+                        <li><a href="http://www.ox.ac.uk/" target="_blank">University of Oxford</a></li>
+
+
+                    
+
+
+                    </ul>
+
+                    <ul class="footer_links col-md-3">
+                        <h4 id="contact-info">Contact Us</h4>
+                        <li>
+                            <a href="mailto:biosharing-contact-us@lists.sf.net?subject=FAIRsharing%20Issue"><i class="fa fa-envelope-o"></i> Email us for
+                                all
+                                enquiries</a>
+                        </li>
+                        <li><a href="https://www.facebook.com/fairsharing" target="_blank"><i class="fa fa-facebook-official"></i>
+                            Facebook</a></li>
+                        <li><a href="https://www.twitter.com/fairsharing_org" target="_blank"><i class="fa fa-twitter"></i>
+                            Twitter</a></li>
+                    </ul>
+
+
+                    <ul class="footer_links col-md-3">
+                        <h4 id="about-info">About FAIRsharing</h4>
+
+                        <li><a id="tour-link" href="#" onclick="startTour();return false;">Take a
+                            Tour</a></li>
+
+                        <!--
+                        <li><a href="/educational">What We Do</a></li>
+                        -->
+
+                        <li><a href="https://fairsharing.org/communities">Community</a>
+                        </li>
+
+                        <li>
+                            <a href="https://fairsharing.org/timeline">Timeline</a>
+                        </li>
+                        <li>
+                            <a href="https://fairsharing.org/license">API and data licence</a>
+                        </li>
+
+
+                    </ul>
+
+
+                </div>
+            </div>
+
+            <div class="bottom_footer row-fluid">
+                <div class="footer_container col-md-12">
+                    <div class="additional-information" align="center">
+
+                        © FAIRsharing 2009-Present | Licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/" alt="View License" target="_blank">Creative Commons
+                        by
+                        Share Alike 4.0 International</a> |
+                        Designed by <a href="http://www.antarctic-design.co.uk/" target="_blank">Antarctic
+                        Design</a>
+                        <br>
+                        <a href="https://fairsharing.org/licence"><img src="FAIRsharing_files/FAIRsharingCC-BY-SA.png"></a>
+                        
+                            <br>Last updated: 2017-10-17 19:27
+                        
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+
+    <script type="text/javascript" src="FAIRsharing_files/bs-jquery-all.js"></script>
+
+
+
+    <script type="text/javascript" src="FAIRsharing_files/bs-bootstrap-all.js"></script>
+
+
+
+<script>
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-21086598-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
+
+    $("select[name='content']").selectpicker({
+        style: 'btn-primary',
+        menuStyle: 'dropdown-inverse',
+        size: "240px",
+        width: "240px"
+    });
+
+    var content = ["developer", "researcher", "funder", "journal"];
+    var current = "developer";
+    var auto_loop = true;
+
+    function toggleDiv(new_div) {
+
+        $(".toggles li").each(function () {
+            $(this).removeClass("selected");
+        });
+
+        $("#toggle-" + new_div).addClass("selected");
+
+        if (!(current === new_div)) { //switch
+            $("#" + current).slideToggle("slow");
+            $("#" + new_div).slideToggle("slow");
+            current = new_div;
+        }
+        return false;
+    }
+
+    $('#document').ready(function () {
+
+        $("#search-text-box").keypress(function (event) {
+            if (event.which == 13) {
+                event.preventDefault();
+                $("form").submit();
+            }
+        });
+
+        $(".toggle").click(function () {
+            toggleDiv($(this).attr("data-target"));
+            auto_loop = false;
+        });
+
+        setInterval(function () {
+            if (auto_loop) {
+                var current_idx = content.indexOf(current);
+                var next_idx = (current_idx + 1) % 4;
+                toggleDiv(content[next_idx]);
+            }
+        }, 7000);
+
+
+    });
+
+    $('#banner_seen').on('click', function(e){
+        var name = $(this).attr('name');
+        $.ajax({
+            type: 'POST',
+            url: '/seen/',
+            data: {
+                clicked: true,
+                csrfmiddlewaretoken: 'PSaleSVvf2aTmY8aJ0xcLDCStlCMbJYnx8FhPIyrY8kNl8acTX38GDkXQj4bcgv7',
+            }
+        });
+    });
+
+</script>
+
+
+
+
+
+
+
+</body></html>

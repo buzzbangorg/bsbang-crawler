@@ -1,2 +1,3 @@
 # Newline-separated urls for bsbang-crawl.py
+http://fairsharing.org
 http://identifiers.org
