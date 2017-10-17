@@ -1,7 +1,6 @@
+import bs4
 import json
 import requests
-
-import bs4
 
 from bioschemas_lib import MANDATORY_PROPERTIES, SCHEMA_INHERITANCE_GRAPH, SCHEMAS_TO_PARSE
 
