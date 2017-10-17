@@ -1,0 +1,2 @@
+# Newline-separated urls for bsbang-crawl.py
+http://identifiers.org
