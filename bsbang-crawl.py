@@ -66,7 +66,7 @@ parser.add_argument('location',
                     help='''Location to crawl. 
 If given a sitemap XML URL (e.g. http://beta.synbiomine.org/synbiomine/sitemap.xml) then crawls all the pages referenced
  by the sitemap.
-If given a webpage URL (e.g. http://identifiers.org) then currently crawls only that webpage.
+If given a webpage URL (e.g. http://identifiers.org, file://test/examples/FAIRsharing.html) then crawls that webpage.
 If given a path (e.g. conf/default-targets.txt) then crawl all the newline-separated URLs in that file.''')
 parser.add_argument('--nosolr', action='store_true', help='Don''t actually load anything into Solr, just fetch')
 args = parser.parse_args()

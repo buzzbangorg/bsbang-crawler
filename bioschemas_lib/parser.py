@@ -1,8 +1,27 @@
+import os
+
 import bs4
 import json
 import requests
-
+from requests_testadapter import Resp
 from bioschemas_lib import MANDATORY_PROPERTIES, SCHEMA_INHERITANCE_GRAPH, SCHEMAS_TO_PARSE
+
+
+class LocalFileAdapter(requests.adapters.HTTPAdapter):
+    def build_response_from_file(self, request):
+        file_path = request.url[7:]
+        with open(file_path, 'rb') as file:
+            buff = bytearray(os.path.getsize(file_path))
+            file.readinto(buff)
+            resp = Resp(buff)
+            r = self.build_response(request, resp)
+
+            return r
+
+    def send(self, request, stream=False, timeout=None,
+             verify=True, cert=None, proxies=None):
+
+        return self.build_response_from_file(request)
 
 
 class BioschemasParser:
@@ -27,7 +46,9 @@ class BioschemasParser:
 
     def parse_bioschemas_jsonld_from_url(self, url):
         print('Loading page %s' % url)
-        r = requests.get(url)
+        requests_session = requests.session()
+        requests_session.mount('file://', LocalFileAdapter())
+        r = requests_session.get(url)
         return self.parse_bioschemas_jsonld_from_html(r.text)
 
     def parse_bioschemas_jsonld_from_html(self, html):

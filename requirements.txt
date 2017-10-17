@@ -2,3 +2,4 @@ beautifulsoup4==4.6.0
 canonicaljson==1.0.0
 lxml==3.7.3
 requests==2.18.4
+requests-testadapter==0.3.0
