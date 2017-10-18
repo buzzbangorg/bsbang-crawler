@@ -6,10 +6,10 @@ import hashlib
 import os
 import requests
 
-import bioschemas_lib
-import bioschemas_lib.crawler
-import bioschemas_lib.parser
-import bioschemas_lib.translator
+import bioschemas
+import bioschemas.crawler
+import bioschemas.parser
+import bioschemas.translator
 
 
 def load_bioschemas_jsonld_from_url(url):
@@ -21,7 +21,7 @@ def load_bioschemas_jsonld_from_url(url):
     """
 
     if url.endswith('/sitemap.xml'):
-        urls = bioschemas_lib.crawler.get_urls_from_sitemap(url)
+        urls = bioschemas.crawler.get_urls_from_sitemap(url)
         urlsLen = len(urls)
         i = 1
         for url in urls:
@@ -41,14 +41,14 @@ def load_bioschemas_jsonld_from_html(url):
     """
 
     try:
-        parser = bioschemas_lib.parser.BioschemasParser()
+        parser = bioschemas.parser.BioschemasParser()
         jsonlds = parser.parse_bioschemas_jsonld_from_url(url)
 
         headers = {'Content-type': 'application/json'}
 
         for jsonld in jsonlds:
             schema = jsonld['@type']
-            solr_json = bioschemas_lib.translator.create_solr_json_with_mandatory_properties(schema, jsonld)
+            solr_json = bioschemas.translator.create_solr_json_with_mandatory_properties(schema, jsonld)
 
             # TODO: Use solr de-dupe for this
             # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))

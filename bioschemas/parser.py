@@ -4,7 +4,7 @@ import bs4
 import json
 import requests
 from requests_testadapter import Resp
-from bioschemas_lib import MANDATORY_PROPERTIES, SCHEMA_INHERITANCE_GRAPH, SCHEMAS_TO_PARSE
+from bioschemas import MANDATORY_PROPERTIES, SCHEMA_INHERITANCE_GRAPH, SCHEMAS_TO_PARSE
 
 
 class LocalFileAdapter(requests.adapters.HTTPAdapter):

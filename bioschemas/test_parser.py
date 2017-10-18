@@ -1,6 +1,6 @@
 import unittest
 
-from bioschemas_lib.parser import BioschemasParser
+from bioschemas.parser import BioschemasParser
 
 
 class TestParserMethods(unittest.TestCase):
