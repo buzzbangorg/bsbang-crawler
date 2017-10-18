@@ -1,6 +1,9 @@
 # README #
 
-This is the crawler component for Buzzbang.
+This is the crawler component for Buzzbang search.
 
-# TESTS #
+# Tests #
 $ python -m unittest discover
+
+# Hacking #
+Please make pull requests to the dev branch. Thanks!
