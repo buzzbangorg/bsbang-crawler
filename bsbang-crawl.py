@@ -21,7 +21,7 @@ def load_bioschemas_jsonld_from_url(url):
     """
 
     if url.endswith('/sitemap.xml'):
-        urls = bioschemas_lib.crawler.get_urls_from_sitemap(args.url)
+        urls = bioschemas_lib.crawler.get_urls_from_sitemap(url)
         urlsLen = len(urls)
         i = 1
         for url in urls:
