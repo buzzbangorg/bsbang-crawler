@@ -1,5 +1,5 @@
 MANDATORY_PROPERTIES = {
-    'Thing': ['@type', 'identifier', 'name', 'url'],
+    'Thing': ['@type', 'name', 'url'],
     'DataCatalog': ['description', 'keywords'],
     'PhysicalEntity': ['additionalType']
 }
