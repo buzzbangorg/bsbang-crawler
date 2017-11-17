@@ -1,3 +1,4 @@
+import logging
 import os
 
 import bs4
@@ -5,6 +6,8 @@ import json
 import requests
 from requests_testadapter import Resp
 from bioschemas import MANDATORY_PROPERTIES, SCHEMA_INHERITANCE_GRAPH, SCHEMAS_TO_PARSE
+
+logger = logging.getLogger(__name__)
 
 
 class LocalFileAdapter(requests.adapters.HTTPAdapter):
@@ -45,7 +48,7 @@ class BioschemasParser:
             self.assert_mandatory_jsonld_properties(parent_schema, jsonld)
 
     def parse_bioschemas_jsonld_from_url(self, url):
-        print('Loading page %s' % url)
+        logger.info('Loading page %s', url)
         requests_session = requests.session()
         requests_session.mount('file://', LocalFileAdapter())
         r = requests_session.get(url)
@@ -54,7 +57,7 @@ class BioschemasParser:
     def parse_bioschemas_jsonld_from_html(self, html):
         soup = bs4.BeautifulSoup(html, 'html.parser')
         ldjson_script_sections = soup.find_all('script', type='application/ld+json')
-        print('Found %d ld+json sections' % len(ldjson_script_sections))
+        logger.debug('Found %d ld+json sections', len(ldjson_script_sections))
 
         jsonlds = []
 
@@ -66,17 +69,17 @@ class BioschemasParser:
         for jsonld in jsonlds:
             try:
                 if '@type' not in jsonld:
-                    print('Ignoring as no @type present')
+                    logger.debug('Ignoring as no @type present')
                     continue
 
                 schema = jsonld['@type']
                 if schema not in self.config['schemas_to_parse']:
-                    print('Ignoring as %s is not a schema we are configured to parse' % type)
+                    logger.debug('Ignoring as %s is not a schema we are configured to parse', type)
 
                 self.assert_mandatory_jsonld_properties(schema, jsonld)
                 final_jsonlds.append(jsonld)
             except KeyError as err:
-                print('Ignoring %s as %s' % (jsonld, err))
+                logger.debug('Ignoring %s as %s', jsonld, err)
                 continue
 
         return final_jsonlds

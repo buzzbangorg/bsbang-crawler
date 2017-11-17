@@ -1,4 +1,8 @@
+import logging
+
 import bioschemas
+
+logger = logging.getLogger(__name__)
 
 
 def create_solr_json_with_mandatory_properties(schema, jsonld):
@@ -20,9 +24,9 @@ def create_solr_json_with_mandatory_properties(schema, jsonld):
             else:
                 solr_prop_name = prop_name
 
-            print(
-                'Adding key "%s" -> "%s" for %s, value "%s"'
-                % (prop_name, solr_prop_name, jsonld[prop_name], schema))
+            logger.debug(
+                'Adding key "%s" -> "%s" for %s, value "%s"',
+                prop_name, solr_prop_name, jsonld[prop_name], schema)
 
             solr_json[solr_prop_name] = jsonld[prop_name]
 

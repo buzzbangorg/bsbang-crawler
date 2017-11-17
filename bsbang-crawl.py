@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
 import argparse
+import logging
 import os
 
 import bsbang
+
+logging.basicConfig(level=logging.DEBUG)
 
 # MAIN
 parser = argparse.ArgumentParser('Crawl a sitemap XML or webpage and insert the bioschemas information into Solr.')
