@@ -1,9 +1,17 @@
 import unittest
 
-from bioschemas.parser import BioschemasParser
+import bioschemas
+from bioschemas.parser import Parser
+
+config = {
+    'jsonld_to_solr_map': bioschemas.JSONLD_TO_SOLR_MAP,
+    'mandatory_properties': bioschemas.MANDATORY_PROPERTIES,
+    'schema_inheritance_graph': bioschemas.SCHEMA_INHERITANCE_GRAPH,
+    'schemas_to_parse': bioschemas.SCHEMAS_TO_PARSE
+}
 
 
-class TestParserMethods(unittest.TestCase):
+class TestParser(unittest.TestCase):
     def test_load_bioschemas_jsonld_from_html(self):
         html = '''<script type="application/ld+json">
         {
@@ -17,7 +25,7 @@ class TestParserMethods(unittest.TestCase):
         </script>
         '''
 
-        bs_parser = BioschemasParser()
+        bs_parser = Parser(config)
         jsonlds = bs_parser.parse_bioschemas_jsonld_from_html(html)
         self.assertEqual(len(jsonlds), 1)
 
@@ -40,6 +48,6 @@ class TestParserMethods(unittest.TestCase):
         </script>
         '''
 
-        bs_parser = BioschemasParser()
+        bs_parser = Parser(config)
         jsonlds = bs_parser.parse_bioschemas_jsonld_from_html(html)
         self.assertEqual(len(jsonlds), 0)

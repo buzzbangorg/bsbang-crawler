@@ -39,14 +39,15 @@ def load_bioschemas_jsonld_from_html(url, config):
     """
 
     try:
-        parser = bioschemas.parser.BioschemasParser()
+        parser = bioschemas.parser.Parser(config)
         jsonlds = parser.parse_bioschemas_jsonld_from_url(url)
+        translator = bioschemas.translator.Translator(config)
 
         headers = {'Content-type': 'application/json'}
 
         for jsonld in jsonlds:
             schema = jsonld['@type']
-            solr_json = bioschemas.translator.create_solr_json_with_mandatory_properties(schema, jsonld)
+            solr_json = translator.create_solr_json_with_mandatory_properties(schema, jsonld)
 
             # TODO: Use solr de-dupe for this
             # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))

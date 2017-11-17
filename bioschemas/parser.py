@@ -27,13 +27,9 @@ class LocalFileAdapter(requests.adapters.HTTPAdapter):
         return self.build_response_from_file(request)
 
 
-class BioschemasParser:
-    def __init__(self):
-        self.config = {
-            'mandatory_properties': MANDATORY_PROPERTIES,
-            'schema_inheritance_graph': SCHEMA_INHERITANCE_GRAPH,
-            'schemas_to_parse': SCHEMAS_TO_PARSE
-        }
+class Parser:
+    def __init__(self, config):
+        self.config = config
 
     def assert_mandatory_jsonld_properties(self, schema, jsonld):
         # print('Asserting schema %s' % schema)
