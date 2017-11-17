@@ -4,7 +4,7 @@ This is the crawler component for Buzzbang search.
 
 # Tests #
 
-$ python -m unittest discover
+$ python3 -m unittest discover
 
 # Hacking #
 
