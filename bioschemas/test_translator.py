@@ -22,3 +22,4 @@ class TestTranslatorMethods(unittest.TestCase):
         self.assertEqual(solr_json['AT_type'], 'PhysicalEntity')
         self.assertEqual(solr_json['additionalType'], 'http://www.ebi.ac.uk/ols/ontologies/so/terms?obo_id=SO:0000704')
         self.assertEqual(solr_json['url'], 'http://localhost:8080/synbiomine/report.do?id=2026346')
+        self.assertFalse('context' in solr_json)
