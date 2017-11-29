@@ -68,6 +68,10 @@ class SolrInserter:
 
         if schema in configured_props:
             for prop_name in configured_props[schema]:
+                # Mandatory checking is done by the parser
+                if not prop_name in jsonld:
+                    continue
+
                 if prop_name in json_to_solr_map:
                     solr_prop_name = json_to_solr_map[prop_name]
                 else:

@@ -35,7 +35,6 @@ class TestTranslator(unittest.TestCase):
             'parent_prop': 'pp_val',
             'child_prop': 'cp_val',
             'optional_parent_prop': 'opp_val',
-            'optional_child_prop': 'ocp_val',
             'ignored_parent_prop': 'ipp_val',
             'ignored_child_prop': 'icp_val'
         }
@@ -46,7 +45,7 @@ class TestTranslator(unittest.TestCase):
         self.assertEqual(solr_json['parent_prop'], 'pp_val')
         self.assertEqual(solr_json['child_prop'], 'cp_val')
         self.assertEqual(solr_json['optional_parent_prop'], 'opp_val')
-        self.assertEqual(solr_json['optional_child_prop'], 'ocp_val')
+        self.assertFalse('optional_child_prop' in solr_json)
         self.assertFalse('ignored_parent_prop' in solr_json)
         self.assertFalse('ignored_child_prop' in solr_json)
 

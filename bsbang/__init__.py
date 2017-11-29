@@ -1,3 +1,5 @@
+import logging
+
 import bioschemas
 import bioschemas.crawler
 import bioschemas.parser
@@ -40,4 +42,5 @@ def load_bioschemas_jsonld_from_html(url, config):
         inserter = bioschemas.inserters.SolrInserter(config)
         inserter.insert(jsonlds)
     except Exception as e:
-        print('Ignoring failure with %s' % str(e))
+        logging.exception('Ignoring failure')
+        # print('Ignoring failure with %s' % str(e))
