@@ -4,7 +4,7 @@ import unittest
 import bioschemas
 import bioschemas.translator
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.ERROR)
 
 
 class TestTranslator(unittest.TestCase):
