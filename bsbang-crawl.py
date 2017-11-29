@@ -20,16 +20,11 @@ If given a path (e.g. conf/default-targets.txt) then crawl all the newline-separ
 parser.add_argument('--nosolr', action='store_true', help='Don''t actually load anything into Solr, just fetch')
 args = parser.parse_args()
 
-config = {
-    'jsonld_to_solr_map': bioschemas.JSONLD_TO_SOLR_MAP,
-    'mandatory_properties': bioschemas.MANDATORY_PROPERTIES,
-    'optional_properties': bioschemas.OPTIONAL_PROPERTIES,
-    'schema_inheritance_graph': bioschemas.SCHEMA_INHERITANCE_GRAPH,
-    'schemas_to_parse': bioschemas.SCHEMAS_TO_PARSE,
-
+config = bioschemas.DEFAULT_CONFIG.copy()
+config.update({
     'post_to_solr': not args.nosolr,
     'solr_json_doc_update_path': 'http://localhost:8983/solr/bsbang/update/json/docs'
-}
+})
 
 if os.path.exists(args.location):
     with open(args.location) as f:
