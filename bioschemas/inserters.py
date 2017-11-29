@@ -19,12 +19,12 @@ class SolrInserter:
         # print('Inspecting schema %s with jsonld size %d' % (schema, len(jsonld)))
         solr_json = {}
 
-        props = self.config['mandatory_properties']
+        schema_props = self.config['mandatory_properties']
         map = self.config['jsonld_to_solr_map']
         schema_graph = self.config['schema_inheritance_graph']
 
-        if schema in props:
-            for prop_name in props[schema]:
+        if schema in schema_props:
+            for prop_name in schema_props[schema]:
                 if prop_name in map:
                     solr_prop_name = map[prop_name]
                 else:
