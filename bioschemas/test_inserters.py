@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.ERROR)
 
 
 class TestTranslator(unittest.TestCase):
-    def test_translate(self):
+    def test_solr_inserter(self):
         config = {
             'jsonld_to_solr_map': {'@type': 'AT_type'},
 
@@ -23,7 +23,7 @@ class TestTranslator(unittest.TestCase):
             }
         }
 
-        translator = bioschemas.inserters.SolrInserter(config)
+        inserter = bioschemas.inserters.SolrInserter(config)
 
         jsonld = {
             '@type': 'Child_type',
@@ -31,7 +31,7 @@ class TestTranslator(unittest.TestCase):
             'child_prop': 'cp_val'
         }
 
-        solr_json = translator.create_solr_json_with_mandatory_properties(jsonld['@type'], jsonld)
+        solr_json = inserter.create_solr_json_with_mandatory_properties(jsonld['@type'], jsonld)
         self.assertEqual(solr_json['parent_prop'], 'pp_val')
         self.assertEqual(solr_json['child_prop'], 'cp_val')
         self.assertEqual(solr_json['AT_type'], 'Child_type')
