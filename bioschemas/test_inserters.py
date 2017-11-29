@@ -13,18 +13,18 @@ class TestTranslator(unittest.TestCase):
             'jsonld_to_solr_map': {'@type': 'AT_type'},
 
             'mandatory_properties': {
-                'Parent_Type': ['@type', 'parent_prop'],
+                'Parent_type': ['@type', 'parent_prop'],
                 'Child_type': ['child_prop']
             },
 
             'optional_properties': {
-                'Parent_Type': ['optional_parent_prop'],
+                'Parent_type': ['optional_parent_prop'],
                 'Child_type': ['optional_child_prop']
             },
 
             'schema_inheritance_graph': {
-                'Child_type': 'Parent_Type',
-                'Parent_Type': None
+                'Child_type': 'Parent_type',
+                'Parent_type': None
             }
         }
 
