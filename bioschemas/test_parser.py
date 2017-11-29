@@ -3,12 +3,7 @@ import unittest
 import bioschemas
 from bioschemas.parser import Parser
 
-config = {
-    'jsonld_to_solr_map': bioschemas.JSONLD_TO_SOLR_MAP,
-    'mandatory_properties': bioschemas.MANDATORY_PROPERTIES,
-    'schema_inheritance_graph': bioschemas.SCHEMA_INHERITANCE_GRAPH,
-    'schemas_to_parse': bioschemas.SCHEMAS_TO_PARSE
-}
+config = bioschemas.DEFAULT_CONFIG
 
 
 class TestParser(unittest.TestCase):

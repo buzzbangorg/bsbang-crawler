@@ -23,6 +23,9 @@ DEFAULT_CONFIG = {
     # The schemas that we want to index
     'schemas_to_parse': ['DataCatalog', 'PhysicalEntity'],
 
+    # To capture older Bioschemas markup, we want to map some older schemas onto newer ones
+    'schema_map': {'BiologicalEntity': 'PhysicalEntity'},
+
     # If a type is not in the map, then assume the source and target names are the same
     'jsonld_to_solr_map': {'@type': 'AT_type'},
 }
