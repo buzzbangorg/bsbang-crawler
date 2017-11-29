@@ -20,7 +20,7 @@ def load_bioschemas_jsonld_from_url(url, config):
         urls_len = len(urls)
         i = 1
         for url in urls:
-            print('Crawling %d of %d pages' % (i, urls_len))
+            logging.debug('Crawling %d of %d pages' % (i, urls_len))
             load_bioschemas_jsonld_from_html(url, config)
             i += 1
     else:
