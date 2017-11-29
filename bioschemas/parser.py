@@ -5,7 +5,6 @@ import bs4
 import json
 import requests
 from requests_testadapter import Resp
-from bioschemas import MANDATORY_PROPERTIES, SCHEMA_INHERITANCE_GRAPH, SCHEMAS_TO_PARSE
 
 logger = logging.getLogger(__name__)
 
