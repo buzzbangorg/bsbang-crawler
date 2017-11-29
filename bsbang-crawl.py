@@ -23,6 +23,7 @@ args = parser.parse_args()
 config = {
     'jsonld_to_solr_map': bioschemas.JSONLD_TO_SOLR_MAP,
     'mandatory_properties': bioschemas.MANDATORY_PROPERTIES,
+    'optional_properties': bioschemas.OPTIONAL_PROPERTIES,
     'schema_inheritance_graph': bioschemas.SCHEMA_INHERITANCE_GRAPH,
     'schemas_to_parse': bioschemas.SCHEMAS_TO_PARSE,
 

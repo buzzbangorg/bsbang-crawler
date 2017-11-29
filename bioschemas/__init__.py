@@ -4,6 +4,10 @@ MANDATORY_PROPERTIES = {
     'PhysicalEntity': ['additionalType']
 }
 
+OPTIONAL_PROPERTIES = {
+    'Thing': ['alternateName']
+}
+
 SCHEMA_INHERITANCE_GRAPH = {
     'CreativeWork': 'Thing',
     'DataCatalog': 'CreativeWork',
