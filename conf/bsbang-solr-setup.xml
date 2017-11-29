@@ -6,7 +6,7 @@
     <field name='description' type='text_en'/>
     <field name='url' type='string'/>
     <!-- from DataCatalog -->
-    <field name='alternateName' type='text_en'/>
+    <field name='alternateName' type='text_en' multiValued='true'/>
     <field name='keywords' type='text_en'/>
     <!-- from PhysicalEntity -->
     <field name='additionalType' type='string'/>
