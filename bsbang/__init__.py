@@ -1,7 +1,3 @@
-import canonicaljson
-import hashlib
-import requests
-
 import bioschemas
 import bioschemas.crawler
 import bioschemas.parser
@@ -41,22 +37,7 @@ def load_bioschemas_jsonld_from_html(url, config):
     try:
         parser = bioschemas.parser.Parser(config)
         jsonlds = parser.parse_bioschemas_jsonld_from_url(url)
-        translator = bioschemas.inserters.SolrInserter(config)
-
-        headers = {'Content-type': 'application/json'}
-
-        for jsonld in jsonlds:
-            schema = jsonld['@type']
-            solr_json = translator.create_solr_json(schema, jsonld)
-
-            # TODO: Use solr de-dupe for this
-            # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
-            solr_json['id'] = hashlib.sha256(canonicaljson.encode_canonical_json(solr_json)).hexdigest()
-
-            print(solr_json)
-
-            if config['post_to_solr']:
-                r = requests.post(config['solr_json_doc_update_path'] + '?commit=true', json=solr_json, headers=headers)
-                print(r.text)
+        inserter = bioschemas.inserters.SolrInserter(config)
+        inserter.insert(jsonlds)
     except Exception as e:
         print('Ignoring failure with %s' % str(e))

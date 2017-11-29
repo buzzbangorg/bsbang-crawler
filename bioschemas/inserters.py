@@ -1,5 +1,9 @@
 import logging
 
+import canonicaljson
+import hashlib
+import requests
+
 logger = logging.getLogger(__name__)
 
 
@@ -7,7 +11,25 @@ class SolrInserter:
     def __init__(self, config):
         self.config = config
 
-    def create_solr_json(self, schema, jsonld):
+    def insert(self, jsonlds):
+        headers = {'Content-type': 'application/json'}
+
+        for jsonld in jsonlds:
+            schema = jsonld['@type']
+            solr_json = self._create_solr_json(schema, jsonld)
+
+            # TODO: Use solr de-dupe for this
+            # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
+            solr_json['id'] = hashlib.sha256(canonicaljson.encode_canonical_json(solr_json)).hexdigest()
+
+            print(solr_json)
+
+            if self.config['post_to_solr']:
+                r = requests.post(
+                    self.config['solr_json_doc_update_path'] + '?commit=true', json=solr_json, headers=headers)
+                print(r.text)
+
+    def _create_solr_json(self, schema, jsonld):
         """
         Create JSON we can put into Solr from the Bioschemas JsonLD
 
@@ -26,7 +48,7 @@ class SolrInserter:
         parent_schema = schema_graph[schema]
 
         if parent_schema is not None:
-            solr_json.update(self.create_solr_json(parent_schema, jsonld))
+            solr_json.update(self._create_solr_json(parent_schema, jsonld))
 
         return solr_json
 
