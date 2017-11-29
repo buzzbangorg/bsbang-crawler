@@ -27,7 +27,8 @@ class SolrInserter:
             if self.config['post_to_solr']:
                 r = requests.post(
                     self.config['solr_json_doc_update_path'] + '?commit=true', json=solr_json, headers=headers)
-                logger.debug(r.text)
+                if r.status_code != 200:
+                    logger.error('Could not post to Solr: ' + r.text)
 
     def _create_solr_json(self, schema, jsonld):
         """
