@@ -69,7 +69,7 @@ class Parser:
 
                 schema = jsonld['@type']
                 if schema not in self.config['schemas_to_parse']:
-                    logger.debug('Ignoring as %s is not a schema we are configured to parse', type)
+                    logger.debug('Ignoring as %s is not a schema we are configured to parse', schema)
 
                 self.assert_mandatory_jsonld_properties(schema, jsonld)
                 final_jsonlds.append(jsonld)
