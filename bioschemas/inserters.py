@@ -7,7 +7,7 @@ class SolrInserter:
     def __init__(self, config):
         self.config = config
 
-    def create_solr_json_with_mandatory_properties(self, schema, jsonld):
+    def create_solr_json(self, schema, jsonld):
         """
         Create JSON we can put into Solr from the Bioschemas JsonLD
 
@@ -26,7 +26,7 @@ class SolrInserter:
         parent_schema = schema_graph[schema]
 
         if parent_schema is not None:
-            solr_json.update(self.create_solr_json_with_mandatory_properties(parent_schema, jsonld))
+            solr_json.update(self.create_solr_json(parent_schema, jsonld))
 
         return solr_json
 

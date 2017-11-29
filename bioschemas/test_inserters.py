@@ -40,7 +40,7 @@ class TestTranslator(unittest.TestCase):
             'ignored_child_prop': 'icp_val'
         }
 
-        solr_json = inserter.create_solr_json_with_mandatory_properties(jsonld['@type'], jsonld)
+        solr_json = inserter.create_solr_json(jsonld['@type'], jsonld)
 
         self.assertEqual(solr_json['AT_type'], 'Child_type')
         self.assertEqual(solr_json['parent_prop'], 'pp_val')

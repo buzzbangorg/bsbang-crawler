@@ -47,7 +47,7 @@ def load_bioschemas_jsonld_from_html(url, config):
 
         for jsonld in jsonlds:
             schema = jsonld['@type']
-            solr_json = translator.create_solr_json_with_mandatory_properties(schema, jsonld)
+            solr_json = translator.create_solr_json(schema, jsonld)
 
             # TODO: Use solr de-dupe for this
             # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
