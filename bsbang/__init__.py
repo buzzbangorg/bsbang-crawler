@@ -5,7 +5,7 @@ import requests
 import bioschemas
 import bioschemas.crawler
 import bioschemas.parser
-import bioschemas.translator
+import bioschemas.inserters
 
 
 def load_bioschemas_jsonld_from_url(url, config):
@@ -41,7 +41,7 @@ def load_bioschemas_jsonld_from_html(url, config):
     try:
         parser = bioschemas.parser.Parser(config)
         jsonlds = parser.parse_bioschemas_jsonld_from_url(url)
-        translator = bioschemas.translator.Translator(config)
+        translator = bioschemas.inserters.SolrInserter(config)
 
         headers = {'Content-type': 'application/json'}
 

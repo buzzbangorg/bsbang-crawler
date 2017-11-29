@@ -2,7 +2,7 @@ import logging
 import unittest
 
 import bioschemas
-import bioschemas.translator
+import bioschemas.inserters
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -23,7 +23,7 @@ class TestTranslator(unittest.TestCase):
             }
         }
 
-        translator = bioschemas.translator.Translator(config)
+        translator = bioschemas.inserters.SolrInserter(config)
 
         jsonld = {
             '@type': 'Child_type',
