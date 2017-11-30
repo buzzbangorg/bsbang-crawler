@@ -50,6 +50,8 @@ def load_bioschemas_jsonld_from_html(url, config):
 
     try:
         parser = bioschemas.parser.Parser(config)
-        return parser.parse_bioschemas_jsonld_from_url(url)
+        jsonlds = parser.parse_bioschemas_jsonld_from_url(url)
+        logger.info('Got %d jsonld sections', len(jsonlds))
+        return jsonlds
     except Exception as e:
         logging.exception('Ignoring failure')
