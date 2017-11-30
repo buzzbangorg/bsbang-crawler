@@ -7,7 +7,7 @@ config = bioschemas.DEFAULT_CONFIG
 
 
 class TestExtractors(unittest.TestCase):
-    def test_extraction_from_html(self):
+    def test_jsonld_extraction_from_html(self):
         html = '''<script type="application/ld+json">
         {
           "@context": "http://bioschemas.org",
@@ -30,7 +30,7 @@ class TestExtractors(unittest.TestCase):
         self.assertEqual(jsonld['identifier'], 'b4401')
         self.assertEqual(jsonld['url'], 'http://localhost:8080/synbiomine/report.do?id=2026346')
 
-    def test_jsonld_mandatory_prop_missing(self):
+    def test_bs_mandatory_prop_missing(self):
         # "name": "Gene arcA E. coli str. K-12 substr. MG1655 b4401",
         jsonld = {
             '@type': 'PhysicalEntity',
