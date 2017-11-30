@@ -26,7 +26,7 @@ class LocalFileAdapter(requests.adapters.HTTPAdapter):
         return self.build_response_from_file(request)
 
 
-class Parser:
+class ExtractorFromHtml:
     def __init__(self, config):
         self.config = config
 

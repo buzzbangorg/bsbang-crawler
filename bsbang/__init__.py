@@ -2,7 +2,7 @@ import logging
 
 import bioschemas
 import bioschemas.crawler
-import bioschemas.parser
+import bioschemas.extractors
 import bioschemas.indexers
 
 logger = logging.getLogger(__name__)
@@ -49,8 +49,8 @@ def load_bioschemas_jsonld_from_html(url, config):
     """
 
     try:
-        parser = bioschemas.parser.Parser(config)
-        jsonlds = parser.parse_bioschemas_jsonld_from_url(url)
+        extractor = bioschemas.extractors.ExtractorFromHtml(config)
+        jsonlds = extractor.parse_bioschemas_jsonld_from_url(url)
         logger.info('Got %d jsonld sections', len(jsonlds))
         return jsonlds
     except Exception as e:

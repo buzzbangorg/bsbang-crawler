@@ -1,13 +1,13 @@
 import unittest
 
 import bioschemas
-from bioschemas.parser import Parser
+from bioschemas.extractors import ExtractorFromHtml
 
 config = bioschemas.DEFAULT_CONFIG
 
 
-class TestParser(unittest.TestCase):
-    def test_parse_from_html(self):
+class TestExtractors(unittest.TestCase):
+    def test_extraction_from_html(self):
         html = '''<script type="application/ld+json">
         {
           "@context": "http://bioschemas.org",
@@ -20,8 +20,8 @@ class TestParser(unittest.TestCase):
         </script>
         '''
 
-        bs_parser = Parser(config)
-        jsonlds = bs_parser.parse_bioschemas_jsonld_from_html(html)
+        e = ExtractorFromHtml(config)
+        jsonlds = e.parse_bioschemas_jsonld_from_html(html)
         self.assertEqual(len(jsonlds), 1)
 
         jsonld = jsonlds[0]
@@ -30,7 +30,7 @@ class TestParser(unittest.TestCase):
         self.assertEqual(jsonld['identifier'], 'b4401')
         self.assertEqual(jsonld['url'], 'http://localhost:8080/synbiomine/report.do?id=2026346')
 
-    def test_parse_from_html_mandatory_prop_missing(self):
+    def test_extraction_from_html_mandatory_prop_missing(self):
         # "name": "Gene arcA E. coli str. K-12 substr. MG1655 b4401",
         html = '''<script type="application/ld+json">
         {
@@ -43,6 +43,6 @@ class TestParser(unittest.TestCase):
         </script>
         '''
 
-        bs_parser = Parser(config)
-        jsonlds = bs_parser.parse_bioschemas_jsonld_from_html(html)
+        e = ExtractorFromHtml(config)
+        jsonlds = e.parse_bioschemas_jsonld_from_html(html)
         self.assertEqual(len(jsonlds), 0)
