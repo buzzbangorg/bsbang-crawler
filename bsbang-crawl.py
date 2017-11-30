@@ -60,12 +60,22 @@ def insert_into_db(_conn, jsonlds_by_url):
 
 # MAIN
 parser = argparse.ArgumentParser('Crawl a sitemap XML or webpage and insert the bioschemas information into Solr.')
-parser.add_argument('location',
-                    help='''Location to crawl. 
+
+parser.add_argument(
+    'location',
+    help='''Location to crawl. 
 If given a sitemap XML URL (e.g. http://beta.synbiomine.org/synbiomine/sitemap.xml) then crawls all the pages referenced
  by the sitemap.
 If given a webpage URL (e.g. http://identifiers.org, file://test/examples/FAIRsharing.html) then crawls that webpage.
 If given a path (e.g. conf/default-targets.txt) then crawl all the newline-separated URLs in that file.''')
+
+parser.add_argument(
+    '--force-sitemap',
+    action='store_true',
+    help='If true then the location is always processed as a sitemap.'
+        + 'Normally this happens automatically when the URL ends with sitemap.xml'
+        + ', but sometimes we need to force this for debugging purposes')
+
 args = parser.parse_args()
 
 config = bioschemas.DEFAULT_CONFIG.copy()
@@ -84,7 +94,11 @@ with sqlite3.connect('data/crawl.db') as conn:
                 line = line.strip()
                 if not line.startswith('#'):
                     insert_into_db(
-                        conn, bsbang.load_bioschemas_jsonld_from_url(line, config, urls_to_exclude=urls_to_exclude))
+                        conn,
+                        bsbang.load_bioschemas_jsonld_from_url(
+                            line, config, urls_to_exclude=urls_to_exclude, force_sitemap=args.force_sitemap))
     else:
         insert_into_db(
-            conn, bsbang.load_bioschemas_jsonld_from_url(args.location, config, urls_to_exclude=urls_to_exclude))
+            conn,
+            bsbang.load_bioschemas_jsonld_from_url(
+                args.location, config, urls_to_exclude=urls_to_exclude, force_sitemap=args.force_sitemap))

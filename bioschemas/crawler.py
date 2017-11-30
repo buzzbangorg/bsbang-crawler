@@ -4,21 +4,29 @@ import io
 import lxml.etree as etree
 import requests
 
+logger = logging.getLogger(__name__)
+
 
 def get_urls_from_sitemap(sitemap_url):
-    """Get all the webpage urls we can reach from a sitemap, whether this is a sitemap XML or a sitemap index XML"""
+    """
+    Get all the webpage urls we can reach from a sitemap, whether this is a sitemap XML or a sitemap index XML
+
+    :param sitemap_url:
+    :return: [<url>]
+    """
+
     r = requests.get(sitemap_url)
     sitemap = etree.parse(io.BytesIO(r.content))
     root_tag = sitemap.getroot().tag
 
     if root_tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}sitemapindex' or root_tag == 'sitemapindex':
-        logging.info('Loading sitemap index %s' % sitemap_url)
+        logger.info('Loading sitemap index %s' % sitemap_url)
         return get_urls_from_loaded_sitemapindex(sitemap)
     elif root_tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}urlset' or root_tag == 'urlset':
-        logging.info('Loading sitemap %s' % sitemap_url)
+        logger.info('Loading sitemap %s' % sitemap_url)
         return get_urls_from_loaded_sitemap(sitemap)
     else:
-        logging.debug('Unrecognized root tag %s in sitemap from %s. Ignoring' % (root_tag, sitemap_url))
+        logger.debug('Unrecognized root tag %s in sitemap from %s. Ignoring' % (root_tag, sitemap_url))
 
 
 def get_urls_from_loaded_sitemap(sitemap):
@@ -27,7 +35,7 @@ def get_urls_from_loaded_sitemap(sitemap):
     loc_elems += sitemap.findall('//loc')
 
     loc_elems_len = len(loc_elems)
-    logging.info('Found %d pages to crawl' % loc_elems_len)
+    logger.info('Found %d pages to crawl' % loc_elems_len)
     for loc_elem in loc_elems:
         urls.add(loc_elem.text)
 
