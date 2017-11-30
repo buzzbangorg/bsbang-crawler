@@ -49,7 +49,6 @@ class Parser:
         :param url:
         :return: [<jsonld>+]
         """
-        logger.info('Loading page %s', url)
         requests_session = requests.session()
         requests_session.mount('file://', LocalFileAdapter())
         r = requests_session.get(url)
@@ -62,7 +61,6 @@ class Parser:
         :param html:
         :return: [<jsonld>+]
         """
-
         soup = bs4.BeautifulSoup(html, 'html.parser')
         ldjson_script_sections = soup.find_all('script', type='application/ld+json')
         logger.debug('Found %d ld+json sections', len(ldjson_script_sections))

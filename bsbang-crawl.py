@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import contextlib
 import json
 import logging
 import os
@@ -68,15 +69,22 @@ If given a path (e.g. conf/default-targets.txt) then crawl all the newline-separ
 args = parser.parse_args()
 
 config = bioschemas.DEFAULT_CONFIG.copy()
-conn = init_db('data/crawl.db')
 
-if os.path.exists(args.location):
-    with open(args.location) as f:
-        for line in f:
-            line = line.strip()
-            if not line.startswith('#'):
-                insert_into_db(conn, bsbang.load_bioschemas_jsonld_from_url(line, config))
-else:
-    insert_into_db(conn, bsbang.load_bioschemas_jsonld_from_url(args.location, config))
+urls_to_exclude = set()
 
-conn.close()
+with sqlite3.connect('data/crawl.db') as conn:
+    conn.row_factory = sqlite3.Row
+    with contextlib.closing(conn.cursor()) as curs:
+        for row in curs.execute('SELECT DISTINCT url FROM jsonld'):
+            urls_to_exclude.add(row['url'])
+
+    if os.path.exists(args.location):
+        with open(args.location) as f:
+            for line in f:
+                line = line.strip()
+                if not line.startswith('#'):
+                    insert_into_db(
+                        conn, bsbang.load_bioschemas_jsonld_from_url(line, config, urls_to_exclude=urls_to_exclude))
+    else:
+        insert_into_db(
+            conn, bsbang.load_bioschemas_jsonld_from_url(args.location, config, urls_to_exclude=urls_to_exclude))
