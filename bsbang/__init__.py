@@ -50,7 +50,7 @@ def load_bioschemas_jsonld_from_html(url, config):
 
     try:
         extractor = bioschemas.extractors.ExtractorFromHtml(config)
-        jsonlds = extractor.parse_bioschemas_jsonld_from_url(url)
+        jsonlds = extractor.extract_bioschemas_jsonld_from_url(url)
         logger.info('Got %d jsonld sections', len(jsonlds))
         return jsonlds
     except Exception as e:

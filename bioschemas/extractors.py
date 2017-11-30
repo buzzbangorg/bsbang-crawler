@@ -30,7 +30,7 @@ class ExtractorFromHtml:
     def __init__(self, config):
         self.config = config
 
-    def parse_bioschemas_jsonld_from_url(self, url):
+    def extract_bioschemas_jsonld_from_url(self, url):
         """
         Extract jsonld from the given url
 
@@ -40,9 +40,9 @@ class ExtractorFromHtml:
         requests_session = requests.session()
         requests_session.mount('file://', LocalFileAdapter())
         r = requests_session.get(url)
-        return self.parse_bioschemas_jsonld_from_html(r.text)
+        return self.extract_bioschemas_jsonld_from_html(r.text)
 
-    def parse_bioschemas_jsonld_from_html(self, html):
+    def extract_bioschemas_jsonld_from_html(self, html):
         """
         Extract Bioschemas jsonld from html
 
@@ -50,9 +50,9 @@ class ExtractorFromHtml:
         :return: [<jsonld>]
         """
 
-        return self._filter_non_bioschemas_jsonld(self._parse_jsonld_from_html(html))
+        return self._extract_non_bioschemas_jsonld(self._extract_jsonld_from_html(html))
 
-    def _parse_jsonld_from_html(self, html):
+    def _extract_jsonld_from_html(self, html):
         """
         Extract jsonld from html
 
@@ -70,7 +70,7 @@ class ExtractorFromHtml:
 
         return jsonlds
 
-    def _filter_non_bioschemas_jsonld(self, jsonlds):
+    def _extract_non_bioschemas_jsonld(self, jsonlds):
         """
         Filters out non-bioschemas jsonld.
 
