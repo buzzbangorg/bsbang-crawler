@@ -2,12 +2,12 @@ import logging
 import unittest
 
 import bioschemas
-import bioschemas.inserters
+import bioschemas.indexers
 
 logging.basicConfig(level=logging.ERROR)
 
 
-class TestTranslator(unittest.TestCase):
+class TestIndexers(unittest.TestCase):
     def test_solr_inserter(self):
         config = {
             'jsonld_to_solr_map': {'@type': 'AT_type'},
@@ -28,7 +28,7 @@ class TestTranslator(unittest.TestCase):
             }
         }
 
-        inserter = bioschemas.inserters.SolrInserter(config)
+        inserter = bioschemas.indexers.SolrIndexer(config)
 
         jsonld = {
             '@type': 'Child_type',

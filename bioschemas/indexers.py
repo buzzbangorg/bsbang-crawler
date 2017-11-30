@@ -7,28 +7,26 @@ import requests
 logger = logging.getLogger(__name__)
 
 
-class SolrInserter:
+class SolrIndexer:
     def __init__(self, config):
         self.config = config
 
-    def insert(self, jsonlds):
+    def index(self, jsonld):
         headers = {'Content-type': 'application/json'}
+        schema = jsonld['@type']
+        solr_json = self._create_solr_json(schema, jsonld)
 
-        for jsonld in jsonlds:
-            schema = jsonld['@type']
-            solr_json = self._create_solr_json(schema, jsonld)
+        # TODO: Use solr de-dupe for this
+        # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
+        solr_json['id'] = hashlib.sha256(canonicaljson.encode_canonical_json(solr_json)).hexdigest()
 
-            # TODO: Use solr de-dupe for this
-            # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
-            solr_json['id'] = hashlib.sha256(canonicaljson.encode_canonical_json(solr_json)).hexdigest()
+        logger.debug('Posting %s', solr_json)
 
-            logger.debug('Posting %s', solr_json)
-
-            if self.config['post_to_solr']:
-                r = requests.post(
-                    self.config['solr_json_doc_update_path'] + '?commit=true', json=solr_json, headers=headers)
-                if r.status_code != 200:
-                    logger.error('Could not post to Solr: %s', r.text)
+        if self.config['post_to_solr']:
+            r = requests.post(
+                self.config['solr_json_doc_update_path'] + '?commit=true', json=solr_json, headers=headers)
+            if r.status_code != 200:
+                logger.error('Could not post to Solr: %s', r.text)
 
     def _create_solr_json(self, schema, jsonld):
         """

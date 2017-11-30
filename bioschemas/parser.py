@@ -43,6 +43,12 @@ class Parser:
             self.assert_mandatory_jsonld_properties(parent_schema, jsonld)
 
     def parse_bioschemas_jsonld_from_url(self, url):
+        """
+        Extract jsonld from the given url
+
+        :param url:
+        :return: [<jsonld>+]
+        """
         logger.info('Loading page %s', url)
         requests_session = requests.session()
         requests_session.mount('file://', LocalFileAdapter())
@@ -50,6 +56,13 @@ class Parser:
         return self.parse_bioschemas_jsonld_from_html(r.text)
 
     def parse_bioschemas_jsonld_from_html(self, html):
+        """
+        Extract jsonld from html
+
+        :param html:
+        :return: [<jsonld>+]
+        """
+
         soup = bs4.BeautifulSoup(html, 'html.parser')
         ldjson_script_sections = soup.find_all('script', type='application/ld+json')
         logger.debug('Found %d ld+json sections', len(ldjson_script_sections))

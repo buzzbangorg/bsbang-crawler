@@ -3,7 +3,7 @@ import logging
 import bioschemas
 import bioschemas.crawler
 import bioschemas.parser
-import bioschemas.inserters
+import bioschemas.indexers
 
 
 def load_bioschemas_jsonld_from_url(url, config):
@@ -12,8 +12,10 @@ def load_bioschemas_jsonld_from_url(url, config):
 
     :param url:
     :param config:
-    :return:
+    :return: {<url>:[<jsonlds>+]}
     """
+
+    jsonlds = {}
 
     if url.endswith('/sitemap.xml'):
         urls = bioschemas.crawler.get_urls_from_sitemap(url)
@@ -21,10 +23,12 @@ def load_bioschemas_jsonld_from_url(url, config):
         i = 1
         for url in urls:
             logging.debug('Crawling %d of %d pages' % (i, urls_len))
-            load_bioschemas_jsonld_from_html(url, config)
+            jsonlds[url] = load_bioschemas_jsonld_from_html(url, config)
             i += 1
     else:
-        load_bioschemas_jsonld_from_html(url, config)
+        jsonlds[url] = load_bioschemas_jsonld_from_html(url, config)
+
+    return jsonlds
 
 
 def load_bioschemas_jsonld_from_html(url, config):
@@ -33,14 +37,11 @@ def load_bioschemas_jsonld_from_html(url, config):
 
     :param url:
     :param config:
-    :return:
+    :return: array of extracted jsonld
     """
 
     try:
         parser = bioschemas.parser.Parser(config)
-        jsonlds = parser.parse_bioschemas_jsonld_from_url(url)
-        inserter = bioschemas.inserters.SolrInserter(config)
-        inserter.insert(jsonlds)
+        return parser.parse_bioschemas_jsonld_from_url(url)
     except Exception as e:
         logging.exception('Ignoring failure')
-        # print('Ignoring failure with %s' % str(e))
