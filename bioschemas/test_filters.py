@@ -22,6 +22,21 @@ class TestFilters(unittest.TestCase):
         jsonlds = f.filter([jsonld])
         self.assertEqual(len(jsonlds), 1)
 
+    def test_mapped_type(self):
+        config = {
+            'schemas_to_parse': ['atype'],
+            'schema_map': {'mappedtype': 'atype'},
+            'schema_inheritance_graph': {'atype': None}
+        }
+
+        jsonld = {
+            '@type': 'mappedtype',
+        }
+
+        f = bioschemas.filters.BioschemasFilter(config)
+        jsonlds = f.filter([jsonld])
+        self.assertEqual(len(jsonlds), 1)
+
     def test_ignored_type(self):
         config = {
             'schemas_to_parse': ['atype'],

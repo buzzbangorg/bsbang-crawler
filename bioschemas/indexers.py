@@ -5,6 +5,7 @@ import hashlib
 import requests
 
 logger = logging.getLogger(__name__)
+# logger.level = logging.DEBUG
 
 
 class SolrIndexer:
@@ -30,18 +31,29 @@ class SolrIndexer:
 
     def _create_solr_json(self, schema, jsonld):
         """
-        Create JSON we can put into Solr from the Bioschemas JsonLD
+        Create JSON we can put into Solr from the Bioschemas JSON-LD
 
-        :param schema:
-        :param jsonld:
+        :param schema: The name of the schema (e.g. 'DataCatalog')
+        :param jsonld: The schema JSON-LD
         :return:
         """
 
         # print('Inspecting schema %s with jsonld size %d' % (schema, len(jsonld)))
         solr_json = {}
 
-        self._process_configured_properties(schema, jsonld, self.config['mandatory_properties'], solr_json)
-        self._process_configured_properties(schema, jsonld, self.config['optional_properties'], solr_json)
+        if 'schema_map' in self.config:
+            schema_map = self.config['schema_map']
+
+            if schema in schema_map:
+                logger.debug('Mapping schema %s to %s', schema, schema_map[schema])
+                schema = schema_map[schema]
+                jsonld['@type'] = schema
+
+        if 'mandatory_properties' in self.config:
+            self._process_configured_properties(schema, jsonld, self.config['mandatory_properties'], solr_json)
+
+        if 'optional_properties' in self.config:
+            self._process_configured_properties(schema, jsonld, self.config['optional_properties'], solr_json)
 
         schema_graph = self.config['schema_inheritance_graph']
         parent_schema = schema_graph[schema]

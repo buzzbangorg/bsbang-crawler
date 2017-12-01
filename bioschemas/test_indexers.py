@@ -4,11 +4,11 @@ import unittest
 import bioschemas
 import bioschemas.indexers
 
-logging.basicConfig(level=logging.ERROR)
+logging.basicConfig(level=logging.DEBUG)
 
 
 class TestIndexers(unittest.TestCase):
-    def test_solr_inserter(self):
+    def test_solr_indexer(self):
         config = {
             'jsonld_to_solr_map': {'@type': 'AT_type'},
 
@@ -49,3 +49,18 @@ class TestIndexers(unittest.TestCase):
         self.assertFalse('ignored_parent_prop' in solr_json)
         self.assertFalse('ignored_child_prop' in solr_json)
 
+    def test_solr_indexer_mapped_type(self):
+        config = {
+            'jsonld_to_solr_map': {'@type': 'AT_type'},
+            'mandatory_properties': {'atype': ['@type']},
+            'schema_map': {'mappedtype': 'atype'},
+            'schema_inheritance_graph': {'atype': None}
+        }
+
+        jsonld = {
+            '@type': 'mappedtype',
+        }
+
+        inserter = bioschemas.indexers.SolrIndexer(config)
+        solr_json = inserter._create_solr_json(jsonld['@type'], jsonld)
+        self.assertEqual(solr_json['AT_type'], 'atype')
