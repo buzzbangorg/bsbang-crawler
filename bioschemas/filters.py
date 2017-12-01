@@ -28,12 +28,13 @@ class BioschemasFilter:
 
                 schema = jsonld['@type']
                 if schema not in self.config['schemas_to_parse']:
-                    logger.debug('Ignoring as %s is not a schema we are configured to parse', schema)
+                    logger.debug('Ignoring %s as it is not a schema we are configured to parse', schema)
+                    continue
 
                 self._assert_mandatory_jsonld_properties(schema, jsonld)
                 final_jsonlds.append(jsonld)
             except KeyError as err:
-                logger.debug('Ignoring %s as %s', jsonld, err)
+                logger.exception('Ignoring error for %s', jsonld)
                 continue
 
         return final_jsonlds
