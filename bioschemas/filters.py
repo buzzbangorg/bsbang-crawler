@@ -1,11 +1,14 @@
 import logging
 
+import bioschemas.utils
+
 logger = logging.getLogger(__name__)
 
 
 class BioschemasFilter:
     def __init__(self, config):
         self.config = config
+        self.utils = bioschemas.utils.Utils(config)
 
     def filter(self, jsonlds):
         """
@@ -25,13 +28,7 @@ class BioschemasFilter:
                 continue
 
             schema = jsonld['@type']
-
-            if 'schema_map' in self.config:
-                schema_map = self.config['schema_map']
-
-                if schema in schema_map:
-                    logger.debug('Mapping schema %s to %s', schema, schema_map[schema])
-                    schema = schema_map[schema]
+            schema = self.utils.map_schema_if_necessary(schema)
 
             if schema not in self.config['schemas_to_parse']:
                 logger.debug('Ignoring %s as it is not a schema we are configured to parse', schema)

@@ -4,6 +4,8 @@ import canonicaljson
 import hashlib
 import requests
 
+import bioschemas.utils
+
 logger = logging.getLogger(__name__)
 # logger.level = logging.DEBUG
 
@@ -11,6 +13,7 @@ logger = logging.getLogger(__name__)
 class SolrIndexer:
     def __init__(self, config):
         self.config = config
+        self.utils = bioschemas.utils.Utils(config)
 
     def index(self, jsonld):
         headers = {'Content-type': 'application/json'}
@@ -33,6 +36,19 @@ class SolrIndexer:
         """
         Create JSON we can put into Solr from the Bioschemas JSON-LD
 
+        :param schema:
+        :param jsonld:
+        :return:
+        """
+        schema = self.utils.map_schema_if_necessary(schema)
+        jsonld['@type'] = schema
+
+        return self._create_solr_json_properties(schema, jsonld)
+
+    def _create_solr_json_properties(self, schema, jsonld):
+        """
+        Create JSON properties we can put into Solr from the Bioschemas JSON-LD
+
         :param schema: The name of the schema (e.g. 'DataCatalog')
         :param jsonld: The schema JSON-LD
         :return:
@@ -40,14 +56,6 @@ class SolrIndexer:
 
         # print('Inspecting schema %s with jsonld size %d' % (schema, len(jsonld)))
         solr_json = {}
-
-        if 'schema_map' in self.config:
-            schema_map = self.config['schema_map']
-
-            if schema in schema_map:
-                logger.debug('Mapping schema %s to %s', schema, schema_map[schema])
-                schema = schema_map[schema]
-                jsonld['@type'] = schema
 
         if 'mandatory_properties' in self.config:
             self._process_configured_properties(schema, jsonld, self.config['mandatory_properties'], solr_json)
@@ -59,7 +67,7 @@ class SolrIndexer:
         parent_schema = schema_graph[schema]
 
         if parent_schema is not None:
-            solr_json.update(self._create_solr_json(parent_schema, jsonld))
+            solr_json.update(self._create_solr_json_properties(parent_schema, jsonld))
 
         return solr_json
 
@@ -80,7 +88,7 @@ class SolrIndexer:
         if schema in configured_props:
             for prop_name in configured_props[schema]:
                 # Mandatory checking is done by the parser
-                if not prop_name in jsonld:
+                if prop_name not in jsonld:
                     continue
 
                 if prop_name in json_to_solr_map:
