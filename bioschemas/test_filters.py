@@ -4,7 +4,7 @@ import unittest
 import bioschemas.filters
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.ERROR)
 
 
 class TestFilters(unittest.TestCase):
@@ -26,7 +26,7 @@ class TestFilters(unittest.TestCase):
     def test_ignored_type(self):
         config = {
             'schemas_to_parse': ['atype'],
-            'mandatory_properties': {'atype': 'mandatory_prop'},
+            'mandatory_properties': {},
             'schema_inheritance_graph': {'atype': None}
         }
 
@@ -41,7 +41,7 @@ class TestFilters(unittest.TestCase):
     def test_mandatory_prop_missing(self):
         config = {
             'schemas_to_parse': ['atype'],
-            'mandatory_properties': {'atype': 'mandatory_prop'},
+            'mandatory_properties': {'atype': ['mandatory_prop']},
             'schema_inheritance_graph': {'atype': None}
         }
 

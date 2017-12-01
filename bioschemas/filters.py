@@ -21,21 +21,22 @@ class BioschemasFilter:
         final_jsonlds = []
 
         for jsonld in jsonlds:
-            try:
-                if '@type' not in jsonld:
-                    logger.debug('Ignoring as no @type present')
-                    continue
-
-                schema = jsonld['@type']
-                if schema not in self.config['schemas_to_parse']:
-                    logger.debug('Ignoring %s as it is not a schema we are configured to parse', schema)
-                    continue
-
-                self._assert_mandatory_jsonld_properties(schema, jsonld)
-                final_jsonlds.append(jsonld)
-            except KeyError as err:
-                logger.exception('Ignoring error for %s', jsonld)
+            if '@type' not in jsonld:
+                logger.debug('Ignoring as no @type present')
                 continue
+
+            schema = jsonld['@type']
+            if schema not in self.config['schemas_to_parse']:
+                logger.debug('Ignoring %s as it is not a schema we are configured to parse', schema)
+                continue
+
+            try:
+                self._assert_mandatory_jsonld_properties(schema, jsonld)
+            except KeyError as e:
+                logging.debug('Ignoring %s', e)
+                continue
+
+            final_jsonlds.append(jsonld)
 
         return final_jsonlds
 
@@ -45,7 +46,7 @@ class BioschemasFilter:
         if schema in self.config['mandatory_properties']:
             for prop in self.config['mandatory_properties'][schema]:
                 if prop not in jsonld:
-                    raise KeyError('Mandatory property %s not present for type %s' % (prop, type))
+                    raise KeyError('Mandatory property %s not present for type %s' % (prop, schema))
 
         parent_schema = self.config['schema_inheritance_graph'][schema]
         if parent_schema is not None:
