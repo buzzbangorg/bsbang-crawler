@@ -25,6 +25,11 @@ If given a webpage URL (e.g. http://identifiers.org, file://test/examples/FAIRsh
 If given a path (e.g. conf/default-targets.txt) then processes all the locations in that file.''')
 
 parser.add_argument(
+    '--force-add',
+    action='store_true',
+    help='If true then URLs are added even if they have already had their JSON-LD extracted')
+
+parser.add_argument(
     '--force-sitemap',
     action='store_true',
     help='If true then the location is always processed as a sitemap.'
@@ -61,8 +66,9 @@ with sqlite3.connect('data/crawl.db') as conn:
     urls_to_exclude = set()
 
     with contextlib.closing(conn.cursor()) as curs:
-        for row in curs.execute('SELECT DISTINCT url FROM jsonld'):
-            urls_to_exclude.add(row['url'])
+        if not args.force_add:
+            for row in curs.execute('SELECT DISTINCT url FROM jsonld'):
+                urls_to_exclude.add(row['url'])
 
         for url in urls_for_extractor:
             # FIXME: Yes, this currently doesn't add new jsonld or update on changes

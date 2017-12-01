@@ -21,7 +21,7 @@ class TestExtractors(unittest.TestCase):
         '''
 
         e = ExtractorFromHtml(config)
-        jsonlds = e.extract_bioschemas_jsonld_from_html(html)
+        jsonlds = e._extract_jsonld_from_html(html)
         self.assertEqual(len(jsonlds), 1)
 
         jsonld = jsonlds[0]
@@ -29,16 +29,3 @@ class TestExtractors(unittest.TestCase):
         self.assertEqual(jsonld['additionalType'], 'http://www.ebi.ac.uk/ols/ontologies/so/terms?obo_id=SO:0000704')
         self.assertEqual(jsonld['identifier'], 'b4401')
         self.assertEqual(jsonld['url'], 'http://localhost:8080/synbiomine/report.do?id=2026346')
-
-    def test_bs_mandatory_prop_missing(self):
-        # "name": "Gene arcA E. coli str. K-12 substr. MG1655 b4401",
-        jsonld = {
-            '@type': 'PhysicalEntity',
-            'additionalType': 'http://www.ebi.ac.uk/ols/ontologies/so/terms?obo_id=SO:0000704',
-            'identifier': 'b4401',
-            'url': 'http://localhost:8080/synbiomine/report.do?id=2026346'
-        }
-
-        e = ExtractorFromHtml(config)
-        jsonlds = e._extract_non_bioschemas_jsonld([jsonld])
-        self.assertEqual(len(jsonlds), 0)
