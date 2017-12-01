@@ -12,7 +12,7 @@ def load_bioschemas_jsonld_from_url(url, config, urls_to_exclude = set(), force_
     """
     Load Bioschemas JSON-LD from an url.  This may be a webpage or a sitemap pointing to webpages'''
 
-    :param url:
+    :param urldsa
     :param config:
     :param urls_to_exclude:
     :return: {<url>:[<jsonlds>+]}

@@ -12,7 +12,7 @@ def get_urls_from_sitemap(sitemap_url):
     Get all the webpage urls we can reach from a sitemap, whether this is a sitemap XML or a sitemap index XML
 
     :param sitemap_url:
-    :return: [<url>]
+    :return: set(<url>)
     """
 
     r = requests.get(sitemap_url)

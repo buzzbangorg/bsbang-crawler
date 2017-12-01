@@ -20,7 +20,9 @@ config.update({
 indexer = bioschemas.indexers.SolrIndexer(config)
 
 with sqlite3.connect('data/crawl.db') as conn:
+    conn.execute("PRAGMA busy_timeout = 30000")
     conn.row_factory = sqlite3.Row
+
     with contextlib.closing(conn.cursor()) as curs:
         for row in curs.execute('SELECT jsonld, url FROM jsonld'):
             # print(row['jsonld'])
