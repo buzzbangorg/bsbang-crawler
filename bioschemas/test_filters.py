@@ -3,17 +3,17 @@ import unittest
 import bioschemas.filters
 
 
-config = bioschemas.DEFAULT_CONFIG
-
-
 class TestFilters(unittest.TestCase):
     def test_bs_mandatory_prop_missing(self):
+        config = {
+            'mandatory_properties': {'type', 'mandatory_prop'},
+            'schema_inheritance_graph': {'type': None}
+        }
+
         # "name": "Gene arcA E. coli str. K-12 substr. MG1655 b4401",
         jsonld = {
-            '@type': 'PhysicalEntity',
-            'additionalType': 'http://www.ebi.ac.uk/ols/ontologies/so/terms?obo_id=SO:0000704',
-            'identifier': 'b4401',
-            'url': 'http://localhost:8080/synbiomine/report.do?id=2026346'
+            '@type': 'type',
+            'some_other_prop': 'cheese'
         }
 
         f = bioschemas.filters.BioschemasFilter(config)
