@@ -11,7 +11,6 @@ class TestFilters(unittest.TestCase):
     def test_type(self):
         config = {
             'schemas_to_parse': ['atype'],
-            'mandatory_properties': {},
             'schema_inheritance_graph': {'atype': None}
         }
 
@@ -26,7 +25,6 @@ class TestFilters(unittest.TestCase):
     def test_ignored_type(self):
         config = {
             'schemas_to_parse': ['atype'],
-            'mandatory_properties': {},
             'schema_inheritance_graph': {'atype': None}
         }
 
