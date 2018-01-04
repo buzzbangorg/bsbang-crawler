@@ -37,7 +37,7 @@ class BioschemasFilter:
             try:
                 self._assert_mandatory_jsonld_properties(schema, jsonld)
             except KeyError as e:
-                logger.debug('Ignoring %s', e)
+                logger.info('Ignoring %s', e)
                 continue
 
             final_jsonlds.append(jsonld)
