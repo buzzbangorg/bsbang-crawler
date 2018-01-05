@@ -66,3 +66,19 @@ class TestFilters(unittest.TestCase):
         f = bioschemas.filters.BioschemasFilter(config)
         jsonlds = f.filter([jsonld])
         self.assertEqual(len(jsonlds), 0)
+
+    def test_mapped_property(self):
+        config = {
+            'schemas_to_parse': ['a_type'],
+            'schema_inheritance_graph': {'a_type': None},
+            'properties_map': {'a_type': { 'a_property': 'b_property' }}
+        }
+
+        jsonld = {
+            '@type': 'a_type',
+            'a_property': 'a_value'
+        }
+
+        f = bioschemas.filters.BioschemasFilter(config)
+        jsonlds = f.filter([jsonld])
+        self.assertEqual(jsonlds[0]['b_property'], 'a_value')

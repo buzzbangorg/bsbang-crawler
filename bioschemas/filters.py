@@ -22,6 +22,11 @@ class BioschemasFilter:
 
         final_jsonlds = []
 
+        if 'properties_map' in self.config:
+            all_properties_to_map = self.config['properties_map']
+        else:
+            all_properties_to_map = {}
+
         for jsonld in jsonlds:
             if '@type' not in jsonld:
                 logger.debug('Ignoring as no @type present')
@@ -33,6 +38,13 @@ class BioschemasFilter:
             if schema not in self.config['schemas_to_parse']:
                 logger.debug('Ignoring %s as it is not a schema we are configured to parse', schema)
                 continue
+
+            if schema in all_properties_to_map:
+                prop_map = all_properties_to_map[schema]
+                for key in jsonld:
+                    if key in prop_map:
+                        jsonld[prop_map[key]] = jsonld[key]
+                        del jsonld[key]
 
             try:
                 self._assert_mandatory_jsonld_properties(schema, jsonld)

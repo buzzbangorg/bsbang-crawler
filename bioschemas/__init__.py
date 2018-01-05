@@ -26,6 +26,13 @@ DEFAULT_CONFIG = {
     # To capture older Bioschemas markup, we want to map some older schemas onto newer ones
     'schema_map': {'BiologicalEntity': 'PhysicalEntity'},
 
+    # To capture older Bioschemas markup, we want to map some older properties onto newer ones
+    'properties_map': {
+        'PhysicalEntity' : {
+            'biologicalType': 'additionalType'
+        }
+    },
+
     # Map jsonld keys to how we will store them in Solr
     # If a type is not in the map then the keys are identical
     'jsonld_to_solr_map': {'@type': 'AT_type'},
