@@ -9,7 +9,7 @@ DEFAULT_CONFIG = {
 
     # The properties that will be indexed if present
     'optional_properties': {
-        'Thing': ['alternateName']
+        'Thing': ['alternateName', 'identifier']
     },
 
     # The inheritance graph of the schemas that we care about
