@@ -4,6 +4,7 @@ import argparse
 import contextlib
 import json
 import logging
+import os
 
 import sqlite3
 
@@ -34,14 +35,19 @@ def insert_into_db(_conn, url, jsonlds):
 
 
 # MAIN
-parser = argparse.ArgumentParser('Process URLs on the crawl DB extract queue and extract Bioschemas for indexing.')
+parser = argparse.ArgumentParser('Extract Bioschemas JSONLD from URLs on the crawl DB extract queue.')
+parser.add_argument('path_to_crawl_db', help='Path to the database used to store crawl information.')
 args = parser.parse_args()
+
+if not os.path.exists(args.path_to_crawl_db):
+    logger.error('Crawl database %s does not exist', args.path_to_crawl_db)
+    exit(1)
 
 config = bioschemas.DEFAULT_CONFIG.copy()
 
 urls_to_exclude = set()
 
-with sqlite3.connect('data/crawl.db') as conn:
+with sqlite3.connect(args.path_to_crawl_db) as conn:
     conn.execute("PRAGMA busy_timeout = 30000")
     conn.row_factory = sqlite3.Row
 

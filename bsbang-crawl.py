@@ -16,6 +16,8 @@ logger = logging.getLogger(__name__)
 # MAIN
 parser = argparse.ArgumentParser('Add a set of URLs for JSONLD extraction to the crawl database.')
 
+parser.add_argument('path_to_crawl_db', help='Path to the database used to store crawl information.')
+
 parser.add_argument(
     'location',
     help='''Location to process. 
@@ -37,6 +39,10 @@ parser.add_argument(
          + ', but sometimes we need to force this for debugging purposes')
 
 args = parser.parse_args()
+
+if not os.path.exists(args.path_to_crawl_db):
+    logger.error('Crawl database %s does not exist', args.path_to_crawl_db)
+    exit(1)
 
 config = bioschemas.DEFAULT_CONFIG.copy()
 urls_to_crawl = set()
@@ -60,7 +66,7 @@ for url in urls_to_crawl:
 
 added = 0
 
-with sqlite3.connect('data/crawl.db') as conn:
+with sqlite3.connect(args.path_to_crawl_db) as conn:
     conn.execute("PRAGMA busy_timeout = 30000")
     conn.row_factory = sqlite3.Row
     urls_to_exclude = set()

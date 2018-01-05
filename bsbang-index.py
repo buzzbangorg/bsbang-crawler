@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
+import argparse
 import contextlib
 import json
 import logging
+import os
 import sqlite3
 
 import bioschemas.indexers
@@ -10,6 +12,15 @@ import bioschemas.indexers
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# MAIN
+parser = argparse.ArgumentParser('Index extracted JSONLD into Solr.')
+parser.add_argument('path_to_crawl_db', help='Path to the database used to store crawl information.')
+args = parser.parse_args()
+
+if not os.path.exists(args.path_to_crawl_db):
+    logger.error('Crawl database %s does not exist', args.path_to_crawl_db)
+    exit(1)
 
 config = bioschemas.DEFAULT_CONFIG.copy()
 config.update({
@@ -19,7 +30,7 @@ config.update({
 
 indexer = bioschemas.indexers.SolrIndexer(config)
 
-with sqlite3.connect('data/crawl.db') as conn:
+with sqlite3.connect(args.path_to_crawl_db) as conn:
     conn.execute("PRAGMA busy_timeout = 30000")
     conn.row_factory = sqlite3.Row
 
