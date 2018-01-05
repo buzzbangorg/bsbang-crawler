@@ -43,7 +43,7 @@ class SolrIndexer:
             logger.debug('Posting %s', solr_json)
 
             r = requests.post(
-                self.config['solr_json_doc_update_path'] + '?commit=true', json=solr_json, headers=headers)
+                self.config['solr_json_doc_update_url'] + '?commit=true', json=solr_json, headers=headers)
             if r.status_code != 200:
                 logger.error('Could not post to Solr: %s', r.text)
 

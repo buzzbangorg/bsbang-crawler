@@ -25,7 +25,7 @@ if not os.path.exists(args.path_to_crawl_db):
 config = bioschemas.DEFAULT_CONFIG.copy()
 config.update({
     'post_to_solr': True,
-    'solr_json_doc_update_path': 'http://localhost:8983/solr/bsbang/update/json/docs',
+    'solr_json_doc_update_url': 'http://localhost:8983/solr/bsbang/update/json/docs',
     'solr_query_url': 'http://localhost:8983/solr/bsbang/select'
 })
 
