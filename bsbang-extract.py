@@ -52,7 +52,11 @@ with sqlite3.connect(args.path_to_crawl_db) as conn:
     conn.row_factory = sqlite3.Row
 
     with contextlib.closing(conn.cursor()) as curs:
+        curs.execute('SELECT COUNT(*) from extract_queue')
+        count = int(curs.fetchone()[0])
+        i = 1
         for row in curs.execute('SELECT url FROM extract_queue'):
             url = row['url']
-            logger.info('Processing %s', url)
+            logger.info('Processing %s (%d of %d)', url, i, count)
             insert_into_db(conn, url, bsbang.load_bioschemas_jsonld_from_html(url, config))
+            i += 1
