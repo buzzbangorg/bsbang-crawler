@@ -25,7 +25,8 @@ if not os.path.exists(args.path_to_crawl_db):
 config = bioschemas.DEFAULT_CONFIG.copy()
 config.update({
     'post_to_solr': True,
-    'solr_json_doc_update_path': 'http://localhost:8983/solr/bsbang/update/json/docs'
+    'solr_json_doc_update_path': 'http://localhost:8983/solr/bsbang/update/json/docs',
+    'solr_query_url': 'http://localhost:8983/solr/bsbang/select'
 })
 
 indexer = bioschemas.indexers.SolrIndexer(config)
@@ -42,5 +43,5 @@ with sqlite3.connect(args.path_to_crawl_db) as conn:
         for row in curs.execute('SELECT jsonld, url FROM jsonld'):
             # print(row['jsonld'])
             logger.info('Indexing %s (%d of %d)', row['url'], i, count)
-            indexer.index(json.loads(row['jsonld']))
+            indexer.index(row['url'], json.loads(row['jsonld']))
             i += 1

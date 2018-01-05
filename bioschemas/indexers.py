@@ -2,6 +2,7 @@ import logging
 
 import canonicaljson
 import hashlib
+import json
 import requests
 
 import bioschemas.utils
@@ -15,7 +16,7 @@ class SolrIndexer:
         self.config = config
         self.utils = bioschemas.utils.Utils(config)
 
-    def index(self, jsonld):
+    def index(self, url, jsonld):
         headers = {'Content-type': 'application/json'}
         schema = jsonld['@type']
         solr_json = self._create_solr_json(schema, jsonld)
@@ -24,9 +25,23 @@ class SolrIndexer:
         # jsonld['id'] = str(uuid.uuid5(namespaceUuid, json.dumps(jsonld)))
         solr_json['id'] = hashlib.sha256(canonicaljson.encode_canonical_json(solr_json)).hexdigest()
 
-        logger.debug('Posting %s', solr_json)
-
         if self.config['post_to_solr']:
+            r = requests.get(self.config['solr_query_url'] + '?q=id:' + solr_json['id'])
+            if r.status_code != 200:
+                logger.error('Could not post to Solr: %s', r.text)
+
+            r_json = json.loads(r.text)
+            num_found = int(r_json['response']['numFound'])
+            if num_found > 0:
+                logger.info('Skipping %s as already indexed', url)
+
+                if num_found > 1:
+                    logger.warn('%s has %d instances which should be impossible', url, num_found)
+
+                return
+
+            logger.debug('Posting %s', solr_json)
+
             r = requests.post(
                 self.config['solr_json_doc_update_path'] + '?commit=true', json=solr_json, headers=headers)
             if r.status_code != 200:
