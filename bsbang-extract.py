@@ -16,20 +16,20 @@ logger = logging.getLogger(__name__)
 
 
 # FUNCTIONS
-def insert_into_db(_conn, url, jsonlds):
+def insert_into_db(_conn, _url, jsonlds):
     """
     Insert jsonlds into the database
 
     :param _conn:
-    :param url:
-    :param jsonlds_by_url: [<jsonld>]
+    :param _url:
+    :param jsonlds: [<jsonld>]
     :return:
     """
 
-    with contextlib.closing(_conn.cursor()) as curs:
+    with contextlib.closing(_conn.cursor()) as _curs:
         for jsonld in jsonlds:
-            curs.execute('INSERT INTO jsonld (url, jsonld) VALUES (?, ?)', (url, json.dumps(jsonld)))
-        curs.execute('DELETE FROM extract_queue WHERE url=?', (url,))
+            _curs.execute('INSERT INTO jsonld (url, jsonld) VALUES (?, ?)', (_url, json.dumps(jsonld)))
+        _curs.execute('DELETE FROM extract_queue WHERE url=?', (_url,))
 
     _conn.commit()
 
