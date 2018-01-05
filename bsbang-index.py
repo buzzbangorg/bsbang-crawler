@@ -13,9 +13,16 @@ import bioschemas.indexers
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
+# FUNCTIONS
+def index_row(_row):
+    indexer.index(_row['url'], json.loads(_row['jsonld']))
+
+
 # MAIN
 parser = argparse.ArgumentParser('Index extracted JSONLD into Solr.')
 parser.add_argument('path_to_crawl_db', help='Path to the database used to store crawl information.')
+parser.add_argument('url_to_index', nargs='?', help='URL to index using only data from the crawl DB')
 args = parser.parse_args()
 
 if not os.path.exists(args.path_to_crawl_db):
@@ -36,12 +43,16 @@ with sqlite3.connect(args.path_to_crawl_db) as conn:
     conn.row_factory = sqlite3.Row
 
     with contextlib.closing(conn.cursor()) as curs:
-        curs.execute('SELECT COUNT(*) from jsonld')
-        count = int(curs.fetchone()[0])
-        i = 1
+        if args.url_to_index is not None:
+            curs.execute('SELECT jsonld, url FROM jsonld where url=?', (args.url_to_index,))
+            index_row(curs.fetchone())
+        else:
+            curs.execute('SELECT COUNT(*) from jsonld')
+            count = int(curs.fetchone()[0])
+            i = 1
 
-        for row in curs.execute('SELECT jsonld, url FROM jsonld'):
-            # print(row['jsonld'])
-            logger.info('Indexing %s (%d of %d)', row['url'], i, count)
-            indexer.index(row['url'], json.loads(row['jsonld']))
-            i += 1
+            for row in curs.execute('SELECT jsonld, url FROM jsonld'):
+                # print(row['jsonld'])
+                logger.info('Indexing %s (%d of %d)', row['url'], i, count)
+                index_row(row)
+                i += 1
