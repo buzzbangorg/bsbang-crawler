@@ -55,6 +55,7 @@ with sqlite3.connect(args.path_to_crawl_db) as conn:
         curs.execute('SELECT COUNT(*) from extract_queue')
         count = int(curs.fetchone()[0])
         i = 1
+
         for row in curs.execute('SELECT url FROM extract_queue'):
             url = row['url']
             logger.info('Processing %s (%d of %d)', url, i, count)

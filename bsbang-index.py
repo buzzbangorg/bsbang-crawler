@@ -35,7 +35,12 @@ with sqlite3.connect(args.path_to_crawl_db) as conn:
     conn.row_factory = sqlite3.Row
 
     with contextlib.closing(conn.cursor()) as curs:
+        curs.execute('SELECT COUNT(*) from jsonld')
+        count = int(curs.fetchone()[0])
+        i = 1
+
         for row in curs.execute('SELECT jsonld, url FROM jsonld'):
             # print(row['jsonld'])
-            logger.info('Indexing %s', row['url'])
+            logger.info('Indexing %s (%d of %d)', row['url'], i, count)
             indexer.index(json.loads(row['jsonld']))
+            i += 1
