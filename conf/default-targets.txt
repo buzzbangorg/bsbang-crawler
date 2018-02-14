@@ -5,4 +5,7 @@ http://identifiers.org
 http://scientificdata.isa-explorer.org
 http://beta.synbiomine.org
 http://beta.synbiomine.org/synbiomine/sitemap.xml
-https://www.ebi.ac.uk/biosamples
+
+# justincc 2018-02-14 not a good target to crawl right now, very large and the json-ld has been updated to a specific samples one rather than an old PhysicalEntity
+# might need to wait for better crawl scalability using apache nutch or similar
+# https://www.ebi.ac.uk/biosamples
