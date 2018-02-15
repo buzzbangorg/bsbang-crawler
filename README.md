@@ -4,6 +4,8 @@ This is the crawler component of Buzzbang search.
 
 # Setup #
 
+These instructions are for Linux.  Windows is not supported.
+
 1. Create intermediate crawl database
 ```
 cd setup
