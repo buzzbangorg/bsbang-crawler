@@ -61,7 +61,9 @@ Please see https://github.com/justinccdev/bsbang-crawler/issues/5
 * Make crawler periodically re-crawl.
 * Understand much more structure (e.g. DataSet elements within DataCatalog).
 * Parse other Bioschemas and schema.org types used by life sciences websites (e.g. Organization, Service, Product)
-* Add mongodb or similar  for capturing crawled JSON-LD (currently I only have Solr but need something else as a general docstore).
+* Instead of using Sqlite as intermediate crawl store, use something more scalable (perhaps mongodb, cassandra, etc.).
+But also see the item where we may want to replace parts/most of crawling infrastructure with a third party project,
+which will already have solved some, if not all, of the scalability issues.
 * Crawl and understand PhysicalEntity/BioChemEntity/ResearchEntity once this matures further.
 
 Any other suggestions welcome as Github issues for discussion or as pull requests.
