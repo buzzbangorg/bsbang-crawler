@@ -53,6 +53,19 @@ See https://github.com/justinccdev/bsbang-frontend for a frontend project to the
 $ python3 -m unittest discover
 ```
 
+# TODO #
+Future possibilities include:
+
+* Possibly switch to using a 3rd party crawler or components rather than this custom-built one. 
+Please see https://github.com/justinccdev/bsbang-crawler/issues/5
+* Make crawler periodically re-crawl.
+* Understand much more structure (e.g. DataSet elements within DataCatalog).
+* Parse other Bioschemas and schema.org types used by life sciences websites (e.g. Organization, Service, Product)
+* Add mongodb or similar  for capturing crawled JSON-LD (currently I only have Solr but need something else as a general docstore).
+* Crawl and understand PhysicalEntity/BioChemEntity/ResearchEntity once this matures further.
+
+Any other suggestions welcome as Github issues for discussion or as pull requests.
+
 # Hacking #
 
 Contributions welcome!  Please
