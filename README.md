@@ -4,9 +4,10 @@ This is the crawler component of Buzzbang search.
 
 # Setup #
 
+<<<<<<< HEAD
 These instructions are for Linux.  Windows is not supported.
 
-1. Create intermediate crawl database
+1. Create the intermediate crawl database
 ```
 cd setup
 ./bsbang-setup-sqlite.py
