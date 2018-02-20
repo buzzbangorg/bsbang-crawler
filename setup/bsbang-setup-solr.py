@@ -4,23 +4,25 @@ import argparse
 from lxml import etree
 import requests
 
-solrPath = 'http://localhost:8983/solr/bsbang/'
-solrSchemaPath = solrPath + 'schema'
 
 
 def post_to_solr(json):
     headers = {'Content-type': 'application/json'}
 
-    print('posting [%s]' % json)
+    # print('posting [%s]' % json)
     r = requests.post(solrSchemaPath, json=json, headers=headers)
-    print('response [%s]' % r.text)
+    # print('response [%s]' % r.text)
 
 
 # MAIN
 parser = argparse.ArgumentParser('Setup a Solr schema for Buzzbang')
 parser.add_argument('config', help='Config file location, e.g. conf/bsbang-solr-setup.xml')
+parser.add_argument('--core-name', default=['bsbang'], nargs='*', help='core-name to be configured')
 args = parser.parse_args()
 
+solrPath = 'http://localhost:8983/solr/' + str(args.core_name[0]) + '/'
+solrSchemaPath = solrPath + 'schema'
+print(solrSchemaPath)
 configXml = etree.parse(args.config)
 
 for fieldElem in configXml.findall('./field'):
