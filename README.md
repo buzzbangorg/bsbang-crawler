@@ -17,8 +17,14 @@ Example:
 
 **2. Queue URLs for Bioschemas JSON-LD extraction by adding them directly and crawling sitemaps**
 ```
-./bsbang-crawl.py <path-to-crawl-db> <location-of-site-map-to-crawl>
+./bsbang-crawl.py <path-to-crawl-db> <location>
 ```
+
+The location can be:
+  * a sitemap (e.g. `http://beta.synbiomine.org/synbiomine/sitemap.xml`)
+  * a webpage (e.g. `http://identifiers.org or file://test/examples/FAIRsharing.html`)
+  * a path (e.g. `conf/default-targets.txt` which will then crawl all the locations in that file)
+
 Example:
 ```
 ./bsbang-crawl.py data/crawl.db http://beta.synbiomine.org/synbiomine/sitemap.xml
