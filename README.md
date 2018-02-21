@@ -27,7 +27,7 @@ The location can be:
 
 Example:
 ```
-./bsbang-crawl.py data/crawl.db http://beta.synbiomine.org/synbiomine/sitemap.xml
+./bsbang-crawl.py data/crawl.db conf/default-targets.txt
 ```
 
 **3. Extract Bioschemas JSON-LD from webpages and insert into the crawl database.**
