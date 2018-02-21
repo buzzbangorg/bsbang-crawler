@@ -111,8 +111,10 @@ class SolrIndexer:
                 else:
                     solr_prop_name = prop_name
 
+                prop_value = self.utils.get_value_from_jsonld_value(jsonld[prop_name])
+
                 logger.debug(
                     'Adding key "%s" -> "%s" for %s, value "%s"',
-                    prop_name, solr_prop_name, jsonld[prop_name], schema)
+                    prop_name, solr_prop_name, prop_value, schema)
 
-                solr_json[solr_prop_name] = jsonld[prop_name]
+                solr_json[solr_prop_name] = prop_value
