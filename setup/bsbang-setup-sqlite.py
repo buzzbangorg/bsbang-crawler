@@ -2,9 +2,15 @@
 
 import contextlib
 import sqlite3
+import argparse
 
+#MAIN
+parser = argparse.ArgumentParser('Setup a Database to store website data')
+parser.add_argument('path_to_crawl_db', help='Path to the database used to store crawl information, e.g data/crawl.db ')
 
-with sqlite3.connect('../data/crawl.db') as conn:
+args = parser.parse_args()
+
+with sqlite3.connect(args.path_to_crawl_db) as conn:
     with contextlib.closing(conn.cursor()) as curs:
         curs.execute("CREATE TABLE IF NOT EXISTS extract_queue (url TEXT PRIMARY KEY ON CONFLICT IGNORE)")
         curs.execute(

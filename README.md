@@ -6,41 +6,51 @@ This is the crawler component of Buzzbang search.
 
 These instructions are for Linux.  Windows is not supported.
 
-1. Create the intermediate crawl database
+**1. Create the intermediate crawl database**
 ```
-cd setup
-./bsbang-setup-sqlite.py
+./setup/bsbang-setup-sqlite.py <path-to-crawl-db>
 ```
-
-2. Queue URLs for Bioschemas JSON-LD extraction by adding them directly and crawling sitemaps
+Example:
 ```
-cd ..
-./bsbang-crawl.py
+./setup/bsbang-setup-sqlite.py data/crawl.db
 ```
 
-3. Extract Bioschemas JSON-LD from webpages and insert into the crawl database.
+**2. Queue URLs for Bioschemas JSON-LD extraction by adding them directly and crawling sitemaps**
 ```
-./bsbang-extract.py
+./bsbang-crawl.py <path-to-crawl-db> <location-of-site-map-to-crawl>
+```
+Example:
+```
+./bsbang-crawl.py data/crawl.db http://beta.synbiomine.org/synbiomine/sitemap.xml
 ```
 
-4. Install Solr.
+**3. Extract Bioschemas JSON-LD from webpages and insert into the crawl database.**
+```
+./bsbang-extract.py <path-to-crawl-db>
+```
 
-5. Create a Solr core named 'bsbang' 
+**4. Install Solr.**
+
+**5. Create a Solr core named 'bsbang'**
 ```
 cd $SOLR/bin
 ./solr create -c bsbang
 ```
 
-6. Run Solr setup
+**6. Run Solr setup**
 ```
 cd $BSBANG/setup
-./bsbang-setup-solr.py
+./bsbang-setup-solr.py <path-to-bsbang-config-file>
+```
+Example:
+```
+./bsbang-setup-solr.py conf/bsbang-solr-setup.xml
 ```
 
-7. Index the extracted Bioschemas JSON-LD in Solr
+**7. Index the extracted Bioschemas JSON-LD in Solr**
 ```
 cd ..
-./bsbang-index.py
+./bsbang-index.py <path-to-crawl-db>
 ```
 
 # Frontend #
