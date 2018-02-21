@@ -15,5 +15,5 @@ with sqlite3.connect(args.path_to_crawl_db) as conn:
         curs.execute("CREATE TABLE IF NOT EXISTS extract_queue (url TEXT PRIMARY KEY ON CONFLICT IGNORE)")
         curs.execute(
             "CREATE TABLE IF NOT EXISTS jsonld "
-                + "(url TEXT NOT NULL, when_crawled INT DEFAULT (strftime('%s', CURRENT_TIMESTAMP)), jsonld TEXT NOT NULL)")
+            "(url TEXT NOT NULL, when_crawled INT DEFAULT (strftime('%s', CURRENT_TIMESTAMP)), jsonld TEXT NOT NULL)")
         conn.commit()
