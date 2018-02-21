@@ -45,12 +45,12 @@ cd $SOLR/bin
 
 **6. Run Solr setup**
 ```
-cd $BSBANG/setup
-./bsbang-setup-solr.py <path-to-bsbang-config-file>
+cd $BSBANG
+./setup/bsbang-setup-solr.py <path-to-bsbang-config-file>
 ```
 Example:
 ```
-./bsbang-setup-solr.py conf/bsbang-solr-setup.xml
+./setup/bsbang-setup-solr.py conf/bsbang-solr-setup.xml
 ```
 
 **7. Index the extracted Bioschemas JSON-LD in Solr**
