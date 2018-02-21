@@ -49,6 +49,31 @@ class TestIndexers(unittest.TestCase):
         self.assertFalse('ignored_parent_prop' in solr_json)
         self.assertFalse('ignored_child_prop' in solr_json)
 
+    def test_solr_indexer_value_type(self):
+        config = {
+            'jsonld_to_solr_map': {},
+
+            'mandatory_properties': {
+                'type': ['prop']
+            },
+
+            'schema_inheritance_graph': {
+                'type': None
+            }
+        }
+
+        inserter = bioschemas.indexers.SolrIndexer(config)
+
+        jsonld = {
+            'prop': {
+                '@value': 'value'
+            }
+        }
+
+        solr_json = inserter._create_solr_json('type', jsonld)
+
+        self.assertEqual(solr_json['prop'], 'value')
+
     def test_solr_indexer_mapped_type(self):
         config = {
             'jsonld_to_solr_map': {'@type': 'AT_type'},
