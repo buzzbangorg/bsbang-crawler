@@ -5,8 +5,8 @@ import sqlite3
 import argparse
 
 #MAIN
-parser = argparse.ArgumentParser('Setup a Database to store website data')
-parser.add_argument('path_to_crawl_db', help='Path to the database used to store crawl information, e.g data/crawl.db ')
+parser = argparse.ArgumentParser('Setup a database to store crawl data')
+parser.add_argument('path_to_crawl_db', help='Path to the database used to store crawl information, e.g data/crawl.db')
 
 args = parser.parse_args()
 
