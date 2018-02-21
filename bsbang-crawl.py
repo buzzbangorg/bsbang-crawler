@@ -51,7 +51,7 @@ if os.path.exists(args.location):
     with open(args.location) as f:
         for line in f:
             line = line.strip()
-            if not line.startswith('#'):
+            if line and not line.startswith('#'):
                 urls_to_crawl.add(line)
 else:
     urls_to_crawl = [args.location]
