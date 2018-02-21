@@ -36,7 +36,7 @@ class SolrIndexer:
                 logger.info('Skipping %s as already indexed', url)
 
                 if num_found > 1:
-                    logger.warn('%s has %d instances which should be impossible', url, num_found)
+                    logger.warning('%s has %d instances which should be impossible', url, num_found)
 
                 return
 
