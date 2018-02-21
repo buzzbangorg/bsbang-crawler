@@ -55,8 +55,11 @@ Example:
 
 **7. Index the extracted Bioschemas JSON-LD in Solr**
 ```
-cd ..
 ./bsbang-index.py <path-to-crawl-db>
+```
+Example:
+```
+./bsbang-index.py data/crawl.db
 ```
 
 # Frontend #
