@@ -60,7 +60,11 @@ urls_for_extractor = set()
 
 for url in urls_to_crawl:
     if url.endswith('/sitemap.xml') or args.force_sitemap:
-        urls_for_extractor.update(bioschemas.crawler.get_urls_from_sitemap(url))
+        logger.info('Crawling sitemap %s', url)
+        try:
+            urls_for_extractor.update(bioschemas.crawler.get_urls_from_sitemap(url))
+        except:
+            logger.warning('Skipping sitemap %s because it is not valid XML')
     else:
         urls_for_extractor.add(url)
 
