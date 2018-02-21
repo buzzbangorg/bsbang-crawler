@@ -58,6 +58,8 @@ else:
 
 urls_for_extractor = set()
 
+non_sitemap_urls = 0
+
 for url in urls_to_crawl:
     if url.endswith('/sitemap.xml') or args.force_sitemap:
         logger.info('Crawling sitemap %s', url)
@@ -66,7 +68,10 @@ for url in urls_to_crawl:
         except:
             logger.warning('Skipping sitemap %s because it is not valid XML')
     else:
+        non_sitemap_urls += 1
         urls_for_extractor.add(url)
+
+logger.info('Added %d other urls to scrape' % non_sitemap_urls)
 
 added = 0
 
