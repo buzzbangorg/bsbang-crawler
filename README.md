@@ -1,11 +1,10 @@
 # README #
 
-This is the crawler component of Buzzbang search.
-
-# Status #
 master:[![CircleCI](https://circleci.com/gh/justinccdev/bsbang-crawler/tree/master.svg?style=svg)](https://circleci.com/gh/justinccdev/bsbang-crawler/tree/master) 
 
-# Setup #
+This is the crawler component of Buzzbang search.
+
+## Setup ##
 
 These instructions are for Linux.  Windows is not supported.
 
@@ -65,17 +64,17 @@ Example:
 ./bsbang-index.py data/crawl.db --solr-core-url http://localhost:8983/solr/testcore/
 ```
 
-# Frontend #
+## Frontend ##
 
 See https://github.com/justinccdev/bsbang-frontend for a frontend project to the index.
 
-# Tests #
+## Tests ##
 
 ```
 $ python3 -m unittest discover
 ```
 
-# TODO #
+## TODO ##
 Future possibilities include:
 
 * Possibly switch to using a 3rd party crawler or components rather than this custom-built one. 
@@ -90,7 +89,7 @@ which will already have solved some, if not all, of the scalability issues.
 
 Any other suggestions welcome as Github issues for discussion or as pull requests.
 
-# Hacking #
+## Hacking ##
 
 Contributions welcome!  Please
 
