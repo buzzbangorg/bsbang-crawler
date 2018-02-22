@@ -23,10 +23,15 @@ def index_row(_row):
 parser = argparse.ArgumentParser('Index extracted JSONLD into Solr.')
 parser.add_argument('path_to_crawl_db', help='Path to the database used to store crawl information.')
 parser.add_argument('url_to_index', nargs='?', help='URL to index using only data from the crawl DB')
-parser.add_argument('--out', default=['http://localhost:8983/solr/bsbang'], nargs='*', help='url to solr endpoint')
+parser.add_argument('-s', '--solr-core-url', nargs='?', help='URL to solr endpoint')
 args = parser.parse_args()
 
-print(args.out)
+if args.solr_core_url is None:
+	endpoint = 'http://localhost:8983/solr/bsbang/'
+else:
+	endpoint = str(args.solr_core_url)
+	logger.info('Indexing at Solr core %s', args.solr_core_url)
+
 if not os.path.exists(args.path_to_crawl_db):
     logger.error('Crawl database %s does not exist', args.path_to_crawl_db)
     exit(1)
@@ -34,8 +39,8 @@ if not os.path.exists(args.path_to_crawl_db):
 config = bioschemas.DEFAULT_CONFIG.copy()
 config.update({
     'post_to_solr': True,
-    'solr_json_doc_update_url': str(args.out[0]) + '/update/json/docs',
-    'solr_query_url': str(args.out[0]) +'/select'
+    'solr_json_doc_update_url': endpoint + '/update/json/docs',
+    'solr_query_url': endpoint +'/select'
 })
 
 indexer = bioschemas.indexers.SolrIndexer(config)
@@ -54,7 +59,6 @@ with sqlite3.connect(args.path_to_crawl_db) as conn:
             i = 1
 
             for row in curs.execute('SELECT jsonld, url FROM jsonld'):
-                # print(row['jsonld'])
                 logger.info('Indexing %s (%d of %d)', row['url'], i, count)
                 index_row(row)
                 i += 1
