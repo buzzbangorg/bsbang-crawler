@@ -2,6 +2,9 @@
 
 This is the crawler component of Buzzbang search.
 
+# Status #
+master:[![CircleCI](https://circleci.com/gh/justinccdev/bsbang-crawler/tree/master.svg?style=svg)](https://circleci.com/gh/justinccdev/bsbang-crawler/tree/master) 
+
 # Setup #
 
 These instructions are for Linux.  Windows is not supported.
