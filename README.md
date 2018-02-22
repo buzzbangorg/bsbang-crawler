@@ -49,20 +49,20 @@ cd $SOLR/bin
 **6. Run Solr setup**
 ```
 cd $BSBANG
-./setup/bsbang-setup-solr.py <path-to-bsbang-config-file>
+./setup/bsbang-setup-solr.py <path-to-bsbang-config-file> --solr-core-url <URL-of-solr-endpoint>
 ```
 Example:
 ```
-./setup/bsbang-setup-solr.py conf/bsbang-solr-setup.xml
+./setup/bsbang-setup-solr.py conf/bsbang-solr-setup.xml --solr-core-url http://localhost:8983/solr/testcore/
 ```
 
 **7. Index the extracted Bioschemas JSON-LD in Solr**
 ```
-./bsbang-index.py <path-to-crawl-db>
+./bsbang-index.py <path-to-crawl-db> --solr-core-url <URL-of-solr-endpoint>
 ```
 Example:
 ```
-./bsbang-index.py data/crawl.db
+./bsbang-index.py data/crawl.db --solr-core-url http://localhost:8983/solr/testcore/
 ```
 
 # Frontend #
