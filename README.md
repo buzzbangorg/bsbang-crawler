@@ -35,6 +35,11 @@ Example:
 ./bsbang-extract.py <path-to-crawl-db>
 ```
 
+** To download the crawled data from the database - 
+```
+./bsbang-dump.py <path-to-crawl-db>
+```
+
 **4. Install Solr.**
 
 **5. Create a Solr core named 'bsbang'**
