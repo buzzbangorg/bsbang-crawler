@@ -39,8 +39,8 @@ if not os.path.exists(args.path_to_crawl_db):
 config = bioschemas.DEFAULT_CONFIG.copy()
 config.update({
     'post_to_solr': True,
-    'solr_json_doc_update_url': endpoint + '/update/json/docs',
-    'solr_query_url': endpoint +'/select'
+    'solr_json_doc_update_url': endpoint + 'update/json/docs',
+    'solr_query_url': endpoint +'select'
 })
 
 indexer = bioschemas.indexers.SolrIndexer(config)
