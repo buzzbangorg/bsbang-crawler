@@ -37,7 +37,7 @@ Example:
 
 ** To download the crawled data from the database - 
 ```
-./bsbang-dump.py <path-to-crawl-db>
+./bsbang-dump.py <path-to-crawl-db> <path-to-save-jsonld>
 ```
 
 **4. Install Solr.**
