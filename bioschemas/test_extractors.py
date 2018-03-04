@@ -1,12 +1,23 @@
 import unittest
+import json
+
+from requests_html import HTML
 
 import bioschemas
-from bioschemas.extractors_new import ExtractorFromHtml
+from bioschemas.extractors import ExtractorFromHtml
 
 config = bioschemas.DEFAULT_CONFIG
 
 
 class TestExtractors(unittest.TestCase):
+    TEST_URL = 'https://httpbin.org/anything'
+
+    def test_get_html_from_url(self):
+        e = ExtractorFromHtml(config)
+        html_response = e.get_html_from_url(self.TEST_URL)
+        json_content = json.loads(html_response.raw_html.decode())
+        self.assertEqual(json_content['url'], self.TEST_URL)
+
     def test_jsonld_extraction_from_html(self):
         html = '''<script type="application/ld+json">
         {
@@ -21,7 +32,7 @@ class TestExtractors(unittest.TestCase):
         '''
 
         e = ExtractorFromHtml(config)
-        jsonlds = e._extract_jsonld_from_html(html)
+        jsonlds = e.extract_jsonld_from_html(HTML(html=html))
         self.assertEqual(len(jsonlds), 1)
 
         jsonld = jsonlds[0]
