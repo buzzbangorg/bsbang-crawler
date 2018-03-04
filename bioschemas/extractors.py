@@ -22,7 +22,6 @@ class LocalFileAdapter(requests.adapters.HTTPAdapter):
 
     def send(self, request, stream=False, timeout=None,
              verify=True, cert=None, proxies=None):
-
         return self.build_response_from_file(request)
 
 

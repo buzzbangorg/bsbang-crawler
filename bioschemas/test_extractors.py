@@ -1,7 +1,7 @@
 import unittest
 
 import bioschemas
-from bioschemas.extractors import ExtractorFromHtml
+from bioschemas.extractors_new import ExtractorFromHtml
 
 config = bioschemas.DEFAULT_CONFIG
 
