@@ -28,10 +28,10 @@ if not os.path.exists(args.path_to_crawl_db):
     exit(1)
 
 if args.path_to_save_jsonld is None:
-    dbpath, _ =  os.path.splitext(args.path_to_crawl_db)
+    dbpath, _ = os.path.splitext(args.path_to_crawl_db)
     filepath = str(dbpath) + '.json'
 else:
-   filepath = args.path_to_save_jsonld
+    filepath = args.path_to_save_jsonld
 
 logger.info('Saving at %s', filepath)
 
@@ -40,11 +40,11 @@ with sqlite3.connect(args.path_to_crawl_db) as conn:
     conn.row_factory = sqlite3.Row
 
     with contextlib.closing(conn.cursor()) as curs:
-
         curs.execute('SELECT COUNT(*) from jsonld')
         count = int(curs.fetchone()[0])
         i = 1
-        if os.path.exists(filepath) and args.force_dump==False:
+
+        if os.path.exists(filepath) and args.force_dump is False:
             logger.error(
                 'File already exists. Please choose a custom file name or add --force-dump to re-write this file',
                 filepath)
