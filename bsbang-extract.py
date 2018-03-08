@@ -57,7 +57,12 @@ with sqlite3.connect(args.path_to_crawl_db) as conn:
         i = 1
 
         for row in curs.execute('SELECT url FROM extract_queue'):
-            url = row['url']
-            logger.info('Processing %s (%d of %d)', url, i, count)
-            insert_into_db(conn, url, bsbang.load_bioschemas_jsonld_from_html(url, config))
+            url = str(row['url']).strip()
+
+            if url:
+                logger.info('Processing %s (%d of %d)', url, i, count)
+                insert_into_db(conn, url, bsbang.load_bioschemas_jsonld_from_html(url, config))
+            else:
+                logger.warning('Skipping (%d of %d) as entry is blank', i, count)
+
             i += 1

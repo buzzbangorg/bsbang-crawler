@@ -51,18 +51,27 @@ if os.path.exists(args.location):
     with open(args.location) as f:
         for line in f:
             line = line.strip()
-            if not line.startswith('#'):
+            if line and not line.startswith('#'):
                 urls_to_crawl.add(line)
 else:
     urls_to_crawl = [args.location]
 
 urls_for_extractor = set()
 
+non_sitemap_urls = 0
+
 for url in urls_to_crawl:
     if url.endswith('/sitemap.xml') or args.force_sitemap:
-        urls_for_extractor.update(bioschemas.crawler.get_urls_from_sitemap(url))
+        logger.info('Crawling sitemap %s', url)
+        try:
+            urls_for_extractor.update(bioschemas.crawler.get_urls_from_sitemap(url))
+        except:
+            logger.warning('Skipping sitemap %s because it is not valid XML')
     else:
+        non_sitemap_urls += 1
         urls_for_extractor.add(url)
+
+logger.info('Added %d other urls to scrape' % non_sitemap_urls)
 
 added = 0
 

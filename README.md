@@ -1,8 +1,10 @@
 # README #
 
+master:[![CircleCI](https://circleci.com/gh/justinccdev/bsbang-crawler/tree/master.svg?style=svg)](https://circleci.com/gh/justinccdev/bsbang-crawler/tree/master) 
+
 This is the crawler component of Buzzbang search.
 
-# Setup #
+## Setup ##
 
 These instructions are for Linux.  Windows is not supported.
 
@@ -27,12 +29,17 @@ The location can be:
 
 Example:
 ```
-./bsbang-crawl.py data/crawl.db http://beta.synbiomine.org/synbiomine/sitemap.xml
+./bsbang-crawl.py data/crawl.db conf/default-targets.txt
 ```
 
 **3. Extract Bioschemas JSON-LD from webpages and insert into the crawl database.**
 ```
 ./bsbang-extract.py <path-to-crawl-db>
+```
+
+** To download the crawled data from the database - 
+```
+./bsbang-dump.py <path-to-crawl-db> <path-to-save-jsonld>
 ```
 
 **4. Install Solr.**
@@ -45,31 +52,34 @@ cd $SOLR/bin
 
 **6. Run Solr setup**
 ```
-cd $BSBANG/setup
-./bsbang-setup-solr.py <path-to-bsbang-config-file>
+cd $BSBANG
+./setup/bsbang-setup-solr.py <path-to-bsbang-config-file> --solr-core-url <URL-of-solr-endpoint>
 ```
 Example:
 ```
-./bsbang-setup-solr.py conf/bsbang-solr-setup.xml
+./setup/bsbang-setup-solr.py conf/bsbang-solr-setup.xml --solr-core-url http://localhost:8983/solr/testcore/
 ```
 
 **7. Index the extracted Bioschemas JSON-LD in Solr**
 ```
-cd ..
-./bsbang-index.py <path-to-crawl-db>
+./bsbang-index.py <path-to-crawl-db> --solr-core-url <URL-of-solr-endpoint>
+```
+Example:
+```
+./bsbang-index.py data/crawl.db --solr-core-url http://localhost:8983/solr/testcore/
 ```
 
-# Frontend #
+## Frontend ##
 
 See https://github.com/justinccdev/bsbang-frontend for a frontend project to the index.
 
-# Tests #
+## Tests ##
 
 ```
 $ python3 -m unittest discover
 ```
 
-# TODO #
+## TODO ##
 Future possibilities include:
 
 * Possibly switch to using a 3rd party crawler or components rather than this custom-built one. 
@@ -84,7 +94,7 @@ which will already have solved some, if not all, of the scalability issues.
 
 Any other suggestions welcome as Github issues for discussion or as pull requests.
 
-# Hacking #
+## Hacking ##
 
 Contributions welcome!  Please
 

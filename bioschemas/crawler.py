@@ -35,7 +35,7 @@ def get_urls_from_loaded_sitemap(sitemap):
     loc_elems += sitemap.findall('//loc')
 
     loc_elems_len = len(loc_elems)
-    logger.info('Found %d pages to crawl' % loc_elems_len)
+    logger.info('Found %d urls to scrape' % loc_elems_len)
     for loc_elem in loc_elems:
         urls.add(loc_elem.text)
 
