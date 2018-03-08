@@ -2,7 +2,7 @@
 
 master:[![CircleCI](https://circleci.com/gh/justinccdev/bsbang-crawler/tree/master.svg?style=svg)](https://circleci.com/gh/justinccdev/bsbang-crawler/tree/master) 
 
-This is the crawler component of Buzzbang search.
+This is the crawler component of Buzzbang search. Please see the https://github.com/justinccdev/bsbang-crawler/wiki for more information.
 
 ## Setup ##
 
