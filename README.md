@@ -2,7 +2,7 @@
 
 master:[![CircleCI](https://circleci.com/gh/justinccdev/bsbang-crawler/tree/master.svg?style=svg)](https://circleci.com/gh/justinccdev/bsbang-crawler/tree/master) 
 
-This is the crawler component for Buzzbang, a project to enable applications to find and use Bioschemas markup, and Google-like search over it for humans. Please see https://github.com/justinccdev/bsbang-crawler/wiki for more information.
+This is the crawler component for Buzzbang, a project to enable applications to find and use Bioschemas markup, and Google-like search over it for humans.  Please see https://github.com/buzzbangorg/buzzbang-doc/wiki for more information on the project.
 
 ## Setup ##
 
