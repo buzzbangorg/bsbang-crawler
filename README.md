@@ -4,7 +4,7 @@ master:[![CircleCI](https://circleci.com/gh/justinccdev/bsbang-crawler/tree/mast
 
 This is the crawler component for Buzzbang, a project to enable applications to find and use Bioschemas markup, and Google-like search over it for humans.  Please see https://github.com/buzzbangorg/buzzbang-doc/wiki for more information.
 
-## Setup ##
+## Usage ##
 
 These instructions are for Linux.  Windows is not supported.
 
